@@ -23,7 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'lidar_code = sensors_package.lidar_code:main'
+            'lidar_code = sensors_package.lidar_code:main',
+            'camera_code = sensors_package.camera_code:main',
         ],
     },
 )
