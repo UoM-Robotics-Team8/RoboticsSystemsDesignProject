@@ -22,12 +22,12 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="package://leo_description/models/Rocker.dae"/>
+            <mesh filename="package://leo_simulation/meshes/Rocker.dae"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <mesh filename="package://leo_description/models/Rocker_outline.stl"/>
+            <mesh filename="package://leo_simulation/meshes/Rocker_outline.stl"/>
           </geometry>
         </collision>
       </link>
@@ -45,7 +45,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="package://leo_description/models/Wheel${model}.dae"/>
+            <mesh filename="package://leo_simulation/meshes/Wheel${model}.dae"/>
           </geometry>
         </visual>
         <collision>
@@ -62,7 +62,7 @@
         </collision>
         <collision>
           <geometry>
-            <mesh filename="package://leo_description/models/Wheel_outline.stl"/>
+            <mesh filename="package://leo_simulation/meshes/Wheel_outline.stl"/>
           </geometry>
         </collision>
       </link>
@@ -80,7 +80,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="package://leo_description/models/WheelMecanum${model}.dae"/>
+            <mesh filename="package://leo_simulation/meshes/WheelMecanum${model}.dae"/>
           </geometry>
         </visual>
         <collision>
@@ -91,7 +91,7 @@
         </collision>
         <collision>
           <geometry>
-            <mesh filename="package://leo_description/models/Mecanum_wheel_outline.stl"/>
+            <mesh filename="package://leo_simulation/meshes/Mecanum_wheel_outline.stl"/>
           </geometry>
         </collision>
       </link>
@@ -113,12 +113,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://leo_description/models/Chassis.dae"/>
+          <mesh filename="package://leo_simulation/meshes/Chassis.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://leo_description/models/Chassis_outline.stl"/>
+          <mesh filename="package://leo_simulation/meshes/Chassis_outline.stl"/>
         </geometry>
       </collision>
     </link>
@@ -150,7 +150,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="package://leo_description/models/Antenna.dae"/>
+            <mesh filename="package://leo_simulation/meshes/Antenna.dae"/>
           </geometry>
         </visual>
         <collision>
@@ -358,7 +358,7 @@
           <friction>
             <ode>
               <mu>0.3</mu>
-              <mu2>0.3</mu2>
+              <mu2>0.3</mu2>ename="$(find leo_description)/urdf/macros.xacro"/>
             </ode>
             <bullet>
               <friction>0.3</friction>
@@ -504,6 +504,11 @@
         filename="ignition-gazebo-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
         <topic>${link_prefix}joint_states</topic>
+        <update_rate>100</update_rate>
+        <joint_name>wheel_FL_joint</joint_name>
+        <joint_name>wheel_FR_joint</joint_name>
+        <joint_name>wheel_RL_joint</joint_name>
+        <joint_name>wheel_RR_joint</joint_name>
       </plugin>
     </gazebo>
 

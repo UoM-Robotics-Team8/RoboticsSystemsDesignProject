@@ -39,6 +39,17 @@ def generate_launch_description():
     }.items(),
     )
 
+    # Include extra models in the world
+    sdf_path = os.path.join(get_package_share_directory('leo_simulation'), 'worlds', 'tb3.sdf')
+    # Spawn extra models (not robots) into the empty world
+    gz_spawn_objects = Node(package='ros_gz_sim', executable='create',
+    arguments=['-file', sdf_path,
+    '-x', '2.0',
+    '-y', '0.5',
+    '-z', '0.0'],
+    output='screen'
+    )
+
     # robot state publisher node
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -47,35 +58,62 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_description_raw}] # add other parameters here if required
     )
 
+    # # joint state publisher
+    # node_joint_state_publisher = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     name='joint_state_publsher_gui',
+    # )
+
     # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
     node_spawn_entity = Node(package='ros_gz_sim', executable='create',
                         arguments=['-topic', '/robot_description',
                                    '-z', '0.5'],
                         output='screen')
+    
+    # Rviz node
+    rviz_config_file = os.path.join(get_package_share_directory(pkg_name), 'rviz', 'nav2.rviz')
+    node_rviz = Node(
+        package='rviz2',
+        namespace='',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', [rviz_config_file]]
+    )
 
+    # Add teleop node
+    node_teleop_twist_keyboard = Node(
+        package='teleop_twist_keyboard',
+        executable='teleop_twist_keyboard',
+        output='screen',
+        prefix='xterm -e', # opens a terminal for teleop
+        remappings=[('/cmd_vel', '/cmd_vel')]
+    )
 
-    # Bridge
+    # Bridge between Gazebo and ROS2 topics
     # https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
     node_ros_gz_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=  [
             "/clock" + "@rosgraph_msgs/msg/Clock" + "[" + "ignition.msgs.Clock",
-            "leo_rover/odometry" + "@nav_msgs/msg/Odometry" + "[" + "ignition.msgs.Odometry",
-            "leo_rover/scan" + "@sensor_msgs/msgs/LaserScan" + "[" + "ignition.msgs.LaserScan",
-            "leo_rover/imu/data_raw" + "@sensor_msgs/msg/Imu" + "[" + "ignition.msgs.IMU",
-            "leo_rover/cmd_vel" + "@geometry_msgs/msg/Twist" + "]" + "ignition.msgs.Twist",
-            "leo_rover/camera/camera_info" + "@sensor_msgs/msg/CameraInfo" + "[" + "ignition.msgs.CameraInfo",
-            "leo_rover/joint_state" + "@sensor_msgs/msgs/JointState" + "[" + "ignition.msgs.Model"
+            "/model/leo_sim/odometry" + "@nav_msgs/msg/Odometry" + "[" + "ignition.msgs.Odometry",
+            "/model/leo_sim/scan" + "@sensor_msgs/msg/LaserScan" + "[" + "ignition.msgs.LaserScan",
+            "/model/leo_sim/tf" + "@tf2_msgs/msg/TFMessage" + "[" + "ignition.msgs.Pose_V",
+            "/model/leo_sim/imu" + "@sensor_msgs/msg/Imu" + "[" + "ignition.msgs.IMU",
+            "/model/leo_sim/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
+            "/model/leo_sim/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
+            "/world/empty/model/leo_sim/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
         ],
-        parameters=[{'qos_overrides./tf_static.publisher.durability": "transient_local'}],
+        parameters=[{'qos_overrides./leo_sim/subscriber/reliablility': 'reliable'}],
         remappings=[
-            ('/leo_rover/cmd_vel', '/cmd_vel'),
-            ('/leo_rover/odometry', '/odom'),
-            ('/leo_rover/scan', '/scan'),
-            ('/leo_rover/tf', '/tf'),
-            ('/leo_rover/imu', '/imu_raw'),
-            ('/leo_rover/joint_state', 'joint_states')
+            ('/model/leo_sim/odometry', '/odom'),
+            ('/model/leo_sim/scan', '/scan'),
+            ('/model/leo_sim/tf', '/tf'),
+            ('/model/leo_sim/imu', 'imu/data_raw'),
+            ('/model/leo_sim/cmd_vel', '/cmd_vel'),
+            ('/model/leo_sim/camera/image_raw', '/camera/image_raw'),
+            ('world/empty/model/leo_sim/joint_state', '/joint_states'),
         ],
         output="screen",
     )
@@ -83,8 +121,12 @@ def generate_launch_description():
     ld.add_action(SetParameter(name='use_sim_time', value=True))
     ld.add_action(ign_resource_path_update)
     ld.add_action(launch_gazebo)
+    ld.add_action(gz_spawn_objects)
     ld.add_action(node_robot_state_publisher)
+    #ld.add_action(node_joint_state_publisher)
     ld.add_action(node_spawn_entity)
+    ld.add_action(node_rviz)
+    ld.add_action(node_teleop_twist_keyboard)
     ld.add_action(node_ros_gz_bridge)
 
     return ld

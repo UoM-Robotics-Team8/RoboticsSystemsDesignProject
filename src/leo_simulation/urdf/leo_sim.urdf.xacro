@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro"
        name="leo_sim">
 
@@ -12,4 +12,124 @@
                  fixed="$(arg fixed)"
                  mecanum_wheels="$(arg mecanum_wheels)"/>
 
+  <link name="lidar_link">
+     <visual>
+          <geometry>
+             <mesh filename="package://leo_simulation/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
+          </geometry>
+          <material name="red">
+               <color rgba="1 0 0 1" />
+          </material>
+          <origin xyz="0 0 0" rpy="0 0 0 " />
+     </visual>
+  </link>
+
+  <link name="sled_link">
+   <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+         <mesh filename="package://leo_simulation/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="blue">
+         <color rgba="0 0 1 1.0"/>
+      </material>
+   </visual>
+  </link>
+
+  <link name="depth_camera_link">
+   <visual name="">
+      <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+         <box size="0.090 0.025 0.025"/>
+      </geometry>
+      <material name="cyan">
+         <color rgba="0 1 1 1.0"/>
+      </material>
+   </visual>
+  </link>
+
+  <joint name="lidar_base_joint" type="fixed">
+     <parent link="base_link"/>
+     <child link="lidar_link"/>
+
+     <origin xyz="0.02 0 0.05" rpy="0 0 0" />
+  </joint>
+
+  <joint name="sled_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="sled_link"/>
+      
+      <origin xyz="0 0 -0.02" rpy="0 0 1.57" />
+   
+  </joint>
+
+  <joint name="depth_camera_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="depth_camera_link"/>
+
+      <origin xyz="0.155 0 0" rpy="-1.57 0 -1.57" />
+      
+  </joint>
+
+<gazebo reference="lidar_link">
+    <sensor type="gpu_lidar" name="generic_lidar_sensor">
+
+      <topic>/model/leo_sim/scan</topic>
+      <frame_id>lidar_link</frame_id>
+      <ignition_frame_id>lidar_linklink</ignition_frame_id>
+
+      <update_rate>10.0</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>512</samples>
+            <resolution>1</resolution>
+            <min_angle>-${pi*0.75}</min_angle>
+            <max_angle>${pi*0.75}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.20</min>
+          <max>10.0</max>
+          <resolution>0.03</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.001</stddev>
+        </noise>
+      </ray>
+      <always_on>1</always_on>
+      <visualize>false</visualize>
+    </sensor>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libignition-gazebo-sensors-system.so" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="depth_camera_link">
+      <sensor name="depth_camera" type="depth">
+         <pose> 0 0 0 0 0 0 </pose>
+         <visualize>true</visualize>
+         <update_rate>5</update_rate>
+         
+         <camera>
+            <horizontal_fov>2</horizontal_fov>
+            <image>
+               <format>R8G8B8</format>
+               <width>640</width>
+               <height>480</height>
+            </image>
+            <clip>
+               <near>0.01</near>
+               <far>5</far>
+            </clip>
+         </camera>
+         <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
+            <frame_name>depth_camera_link</frame_name>
+         </plugin>
+      </sensor>
+   </gazebo>
 </robot>
