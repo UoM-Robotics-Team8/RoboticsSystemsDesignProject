@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="leo">
+
+  <xacro:arg name="mecanum_wheels" default="false"/>
+  
+  <xacro:include filename="$(find leo_description)/urdf/macros.xacro"/>
+
+  <xacro:leo mecanum_wheels="$(arg mecanum_wheels)"/>
+
+
+  <link name="lidar_link">
+     <visual>
+          <geometry>
+             <mesh filename="package://leo_simulation/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
+          </geometry>
+          <material name="red">
+               <color rgba="1 0 0 1" />
+          </material>
+          <origin xyz="0 0 0" rpy="0 0 0 " />
+     </visual>
+  </link>
+
+  <link name="sled_link">
+   <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+         <mesh filename="package://leo_simulation/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="blue">
+         <color rgba="0 0 1 1.0"/>
+      </material>
+   </visual>
+  </link>
+
+  <link name="depth_camera_link">
+   <visual name="">
+      <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+         <box size="0.090 0.025 0.025"/>
+      </geometry>
+      <material name="cyan">
+         <color rgba="0 1 1 1.0"/>
+      </material>
+   </visual>
+  </link>
+
+  <joint name="lidar_base_joint" type="fixed">
+     <parent link="base_link"/>
+     <child link="lidar_link"/>
+
+     <origin xyz="0.02 0 0.05" rpy="0 0 0" />
+  </joint>
+
+  <joint name="sled_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="sled_link"/>
+      
+      <origin xyz="0 0 -0.02" rpy="0 0 1.57" />
+   
+  </joint>
+
+  <joint name="depth_camera_base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="depth_camera_link"/>
+
+      <origin xyz="0.155 0 0" rpy="-1.57 0 -1.57" />
+      
+  </joint>
+</robot>

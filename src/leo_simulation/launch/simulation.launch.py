@@ -81,14 +81,14 @@ def generate_launch_description():
         arguments=['-d', [rviz_config_file]]
     )
 
-    # Add teleop node
-    node_teleop_twist_keyboard = Node(
-        package='teleop_twist_keyboard',
-        executable='teleop_twist_keyboard',
-        output='screen',
-        prefix='xterm -e', # opens a terminal for teleop
-        remappings=[('/cmd_vel', '/cmd_vel')]
-    )
+    # # Add teleop node
+    # node_teleop_twist_keyboard = Node(
+    #     package='teleop_twist_keyboard',
+    #     executable='teleop_twist_keyboard',
+    #     output='screen',
+    #     prefix='xterm -e', # opens a terminal for teleop
+    #     remappings=[('/cmd_vel', '/cmd_vel')]
+    # )
 
     # Bridge between Gazebo and ROS2 topics
     # https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
@@ -105,15 +105,15 @@ def generate_launch_description():
             "/model/leo_sim/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
             "/world/empty/model/leo_sim/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
         ],
-        parameters=[{'qos_overrides./leo_sim/subscriber/reliablility': 'reliable'}],
+        parameters=[{'qos_overrides./leo_sim/subscriber/reliability': 'reliable'}],
         remappings=[
             ('/model/leo_sim/odometry', '/odom'),
             ('/model/leo_sim/scan', '/scan'),
             ('/model/leo_sim/tf', '/tf'),
-            ('/model/leo_sim/imu', 'imu/data_raw'),
+            ('/model/leo_sim/imu', '/imu/data_raw'),
             ('/model/leo_sim/cmd_vel', '/cmd_vel'),
-            ('/model/leo_sim/camera/image_raw', '/camera/image_raw'),
-            ('world/empty/model/leo_sim/joint_state', '/joint_states'),
+            ('/model/leo_sim/camera/image_raw', '/camera'),
+            ('/world/empty/model/leo_sim/joint_state', '/joint_states'),
         ],
         output="screen",
     )
@@ -126,7 +126,7 @@ def generate_launch_description():
     #ld.add_action(node_joint_state_publisher)
     ld.add_action(node_spawn_entity)
     ld.add_action(node_rviz)
-    ld.add_action(node_teleop_twist_keyboard)
+    #ld.add_action(node_teleop_twist_keyboard)
     ld.add_action(node_ros_gz_bridge)
 
     return ld

@@ -1,0 +1,46 @@
+[0.736s] Invoking command in '/home/delewlew/UoM-Robotics-Team8/src/leo_simulation': PYTHONPATH=/home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base build/leo_simulation build --build-base /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build install --record /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/install.log --single-version-externally-managed install_data
+[0.970s] running egg_info
+[0.971s] creating build/leo_simulation/leo_simulation.egg-info
+[0.971s] writing build/leo_simulation/leo_simulation.egg-info/PKG-INFO
+[0.971s] writing dependency_links to build/leo_simulation/leo_simulation.egg-info/dependency_links.txt
+[0.971s] writing entry points to build/leo_simulation/leo_simulation.egg-info/entry_points.txt
+[0.971s] writing requirements to build/leo_simulation/leo_simulation.egg-info/requires.txt
+[0.972s] writing top-level names to build/leo_simulation/leo_simulation.egg-info/top_level.txt
+[0.972s] writing manifest file 'build/leo_simulation/leo_simulation.egg-info/SOURCES.txt'
+[0.973s] reading manifest file 'build/leo_simulation/leo_simulation.egg-info/SOURCES.txt'
+[0.974s] writing manifest file 'build/leo_simulation/leo_simulation.egg-info/SOURCES.txt'
+[0.974s] running build
+[0.975s] running build_py
+[0.976s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build
+[0.976s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build/lib
+[0.976s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build/lib/leo_simulation
+[0.977s] copying leo_simulation/__init__.py -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build/lib/leo_simulation
+[0.977s] running install
+[0.977s] running install_lib
+[0.977s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages/leo_simulation
+[0.978s] copying /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build/lib/leo_simulation/__init__.py -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages/leo_simulation
+[0.978s] byte-compiling /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages/leo_simulation/__init__.py to __init__.cpython-310.pyc
+[0.979s] running install_data
+[0.980s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/ament_index
+[0.980s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/ament_index/resource_index
+[0.980s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/ament_index/resource_index/packages
+[0.980s] copying resource/leo_simulation -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/ament_index/resource_index/packages
+[0.980s] copying package.xml -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation
+[0.981s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/urdf
+[0.981s] copying urdf/leo.urdf.xacro -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/urdf
+[0.981s] copying urdf/macros.xacro -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/urdf
+[0.981s] copying urdf/leo_sim.urdf.xacro -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/urdf
+[0.981s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.981s] copying meshes/Mecanum_wheel_outline.stl -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.981s] copying meshes/Wheel_outline.stl -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.981s] copying meshes/Generic_100mm_lidar.stl -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.984s] copying meshes/Chassis_outline.stl -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.984s] copying meshes/Rocker_outline.stl -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/meshes
+[0.985s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/worlds
+[0.985s] creating /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/launch
+[0.985s] copying launch/simulation.launch.py -> /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/share/leo_simulation/launch
+[0.985s] running install_egg_info
+[0.987s] Copying build/leo_simulation/leo_simulation.egg-info to /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages/leo_simulation-0.0.0-py3.10.egg-info
+[0.988s] running install_scripts
+[1.006s] writing list of installed files to '/home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/install.log'
+[1.024s] Invoked command in '/home/delewlew/UoM-Robotics-Team8/src/leo_simulation' returned '0': PYTHONPATH=/home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/delewlew/UoM-Robotics-Team8/src/leo_simulation/install/leo_simulation/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base build/leo_simulation build --build-base /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/build install --record /home/delewlew/UoM-Robotics-Team8/src/leo_simulation/build/leo_simulation/install.log --single-version-externally-managed install_data
