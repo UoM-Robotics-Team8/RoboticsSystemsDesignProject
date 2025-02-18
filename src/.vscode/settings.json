@@ -1,0 +1,20 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/delewlew/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/sensors_package/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/leo_simulation/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/leo_msgs/local/lib/python3.10/dist-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/delewlew/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/sensors_package/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/leo_simulation/lib/python3.10/site-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/leo_msgs/local/lib/python3.10/dist-packages",
+        "/home/delewlew/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

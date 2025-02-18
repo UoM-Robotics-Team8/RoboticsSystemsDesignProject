@@ -15,7 +15,7 @@ def generate_launch_description():
 
     launch_lidar = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('rplidar_ros'), 'launch'),
-                                       '/rplidar_a2m12_launch.py'])
+                                       '/view_rplidar_a2m12_launch.py'])
     )
 
     node_lidar = Node(
@@ -30,8 +30,17 @@ def generate_launch_description():
         parameters=[{'yaml_filename': yaml_path}]
     )
 
+    # node_rviz = Node(
+    #     package='rviz2',
+    #     namespace='',
+    #     executable='rviz2',
+    #     name='rviz2',
+    #     #arguments=['-d']
+    # )
+
     ld.add_action(launch_lidar)
     ld.add_action(node_lidar)
     ld.add_action(node_laser_filter)
+    #ld.add_action(node_rviz)
 
     return ld
