@@ -4,33 +4,14 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch_ros.actions import Node, SetParameter
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import PathJoinSubstitution
 import xacro
 
 def generate_launch_description():
-    """
-    Launches Gazebo to simulate the Leo Rover.
-    """
     ld = LaunchDescription()
 
-    pkg_name = "simulation_package"
-    file_subpath = "urdf/leo_rover.urdf.xacro"
-
-    # Necessary fixes
-    remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
-    
-    lifecycle_nodes = [
-        'controller_server',
-        'planner_server',
-        'behaviour_server',
-        'bt_navigator',
-    ]
-
-
-    # LOAD PARAMETERS FROM YAML FILES
-    config_bt_nav     = PathJoinSubstitution([pkg_name, 'config', 'bt_nav.yaml'])
-    config_planner    = PathJoinSubstitution([pkg_name, 'config', 'planner.yaml'])
-    config_controller = PathJoinSubstitution([pkg_name, 'config', 'controller.yaml'])
+    # Specify the name of the package and path to xacro file in external package
+    pkg_name = 'simulation_package'
+    file_subpath = 'urdf/leo_rover.urdf.xacro'
 
     # Set ignition resource path (to be able to render meshes)
     resource_paths = [os.path.join(get_package_prefix(pkg_name), 'share')]
@@ -55,72 +36,17 @@ def generate_launch_description():
     }.items(),
     )
 
-    # Include SLAM Toolbox standard launch file
-    launch_slamtoolbox = IncludeLaunchDescription(
-    PythonLaunchDescriptionSource([get_package_share_directory('slam_toolbox'), '/launch', '/online_async_launch.py']),
-    launch_arguments={}.items(),
-    )
-
-    # # Behaviour Tree Navigator
-    # node_bt_nav = Node(
-    #     package='nav2_bt_navigator',
-    #     executable='bt_navigator',
-    #     name='bt_navigator',
-    #     output='screen',
-    #     parameters=[config_bt_nav],
-    #     remappings=remappings,
-    # )
-
-    # # Behaviour Tree Server
-    # node_behaviour = Node(
-    #     package='nav2_behaviors',
-    #     executable='behavior_server',
-    #     name='behaviour_server',
-    #     output='screen',
-    #     parameters=[config_bt_nav],
-    #     remappings=remappings,
-    # )
-    
-    # # Planner Server Node
-    # node_planner = Node(
-    #     package='nav2_planner',
-    #     executable='planner_server',
-    #     name='planner_server',
-    #     output='screen',
-    #     parameters=[config_planner],
-    #     remappings=remappings,
-    # )
-    
-    # # Controller Server Node
-    # node_controller = Node(
-    #     package='nav2_controller',
-    #     executable='controller_server',
-    #     name='controller_server',
-    #     output='screen',
-    #     parameters=[config_controller],
-    #     remappings=remappings,
-    # )
-
-    # # Lifecycle Node Manager to automatically start lifecycles nodes (from list)
-    # node_lifecycle_manager = Node(
-    #     package='nav2_lifecycle_manager',
-    #     executable='lifecycle_manager',
-    #     name='lifecycle_manager_navigation',
-    #     output='screen',
-    #     parameters=[{'autostart': True}, {'node_names': lifecycle_nodes}],
-    # )
-
     # Include extra models in the world
-    sdf_path = os.path.join(get_package_share_directory('simulation_package'), 'worlds', 'tb3.sdf')
+    sdf_path = os.path.join(get_package_share_directory('simulation_package'), 'worlds', 'maze.sdf')
     # Spawn extra models (not robots) into the empty world
     gz_spawn_objects = Node(package='ros_gz_sim', executable='create',
     arguments=['-file', sdf_path,
-    '-x', '2.0',
-    '-y', '0.5',
+    '-x', '-10',
+    '-y', '-10',
     '-z', '0.0'],
     output='screen'
     )
-
+ 
     # robot state publisher node
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -129,40 +55,12 @@ def generate_launch_description():
         parameters=[{'robot_description': robot_description_raw}] # add other parameters here if required
     )
 
-    # # joint state publisher
-    # node_joint_state_publisher = Node(
-    #     package='joint_state_publisher_gui',
-    #     executable='joint_state_publisher_gui',
-    #     name='joint_state_publsher_gui',
-    # )
-
     # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
     node_spawn_entity = Node(package='ros_gz_sim', executable='create',
                         arguments=['-topic', '/robot_description',
                                    '-z', '0.5'],
                         output='screen')
     
-    # Rviz node
-    rviz_config_file = os.path.join(get_package_share_directory(pkg_name), 'rviz', 'slam.rviz')
-    node_rviz = Node(
-        package='rviz2',
-        namespace='',
-        executable='rviz2',
-        name='rviz2',
-        arguments=['-d', [rviz_config_file]]
-    )
-
-
-
-    # # Add teleop node
-    # node_teleop_twist_keyboard = Node(
-    #     package='teleop_twist_keyboard',
-    #     executable='teleop_twist_keyboard',
-    #     output='screen',
-    #     prefix='xterm -e', # opens a terminal for teleop
-    #     remappings=[('/cmd_vel', '/cmd_vel')]
-    # )
-
     # Bridge between Gazebo and ROS2 topics
     # https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
     node_ros_gz_bridge = Node(
@@ -176,7 +74,7 @@ def generate_launch_description():
             "/model/leo_rover/imu" + "@sensor_msgs/msg/Imu" + "[" + "ignition.msgs.IMU",
             "/model/leo_rover/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
             "/model/leo_rover/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
-            "/world/empty/model/leo_rover/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
+            "/model/leo_rover/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
         ],
         parameters=[{'qos_overrides./leo_rover/subscriber/reliability': 'reliable'}],
         remappings=[
@@ -186,7 +84,7 @@ def generate_launch_description():
             ('/model/leo_rover/imu', '/imu/data_raw'),
             ('/model/leo_rover/cmd_vel', '/cmd_vel'),
             ('/model/leo_rover/camera/image_raw', '/camera'),
-            ('/world/empty/model/leo_rover/joint_state', '/joint_states'),
+            ('/model/leo_rover/joint_state', '/joint_states'),
         ],
         output="screen",
     )
@@ -194,18 +92,10 @@ def generate_launch_description():
     ld.add_action(SetParameter(name='use_sim_time', value=True))
     ld.add_action(ign_resource_path_update)
     ld.add_action(launch_gazebo)
-    ld.add_action(launch_slamtoolbox)
-    # ld.add_action(node_bt_nav)
-    # ld.add_action(node_behaviour)
-    # ld.add_action(node_planner)
-    # ld.add_action(node_controller)
-    # ld.add_action(node_lifecycle_manager)
     ld.add_action(gz_spawn_objects)
     ld.add_action(node_robot_state_publisher)
-    #ld.add_action(node_joint_state_publisher)
     ld.add_action(node_spawn_entity)
-    ld.add_action(node_rviz)
-    #ld.add_action(node_teleop_twist_keyboard)
     ld.add_action(node_ros_gz_bridge)
 
     return ld
+
