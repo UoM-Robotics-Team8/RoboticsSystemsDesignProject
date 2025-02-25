@@ -13,20 +13,38 @@ def generate_launch_description():
     pkg_name = 'simulation_package'
     file_subpath = 'urdf/leo_rover.urdf.xacro'
 
-    # Set ignition resource path (to be able to render meshes)
-    resource_paths = [os.path.join(get_package_prefix(pkg_name), 'share')]
+    # Set ignition resource path (so it can find your world files)
+    ign_resource_path = SetEnvironmentVariable(name='IGN_GAZEBO_RESOURCE_PATH',
+    value=[os.path.join(get_package_share_directory(pkg_name),'worlds')])
 
-    # Add any existing declared resources
-    if 'IGN_GAZEBO_RESOURCE_PATH' in os.environ:
-        resource_paths.insert(0, os.environ['IGN_GAZEBO_RESOURCE_PATH'])
-
-    # Concatenate a path seperator (':') between all paths and update the environment variable
-    ign_resource_path_update = SetEnvironmentVariable(name='IGN_GAZEBO_RESOURCE_PATH',value=[os.pathsep.join(resource_paths)])
-
-
-    # Use xacro to process the URDF file
+    # Use xacro to process the file
     xacro_file = os.path.join(get_package_share_directory(pkg_name),file_subpath)
     robot_description_raw = xacro.process_file(xacro_file).toxml()
+
+
+    # Include extra models in the world
+    sdf_path = os.path.join(get_package_share_directory(pkg_name), 'worlds', 'tb3.sdf')
+
+    # if 'IGN_GAZEBO_RESOURCE_PATH' in os.environ:
+    #     gz_world_path =  os.environ['IGN_GAZEBO_RESOURCE_PATH'] + os.pathsep + os.path.join(get_package_share_directory(pkg_name), "worlds")
+    # else:
+    #     gz_world_path =  os.path.join(get_package_share_directory(pkg_name), "worlds")
+
+    # ign_resource_path_update = SetEnvironmentVariable(name='IGN_GAZEBO_RESOURCE_PATH',value=[gz_world_path])
+
+    # Get paths
+    package_path = get_package_share_directory(pkg_name)
+    gz_world_path = os.path.join(package_path, "worlds")
+    mesh_path = os.path.join(package_path, "meshes")
+
+    # Update IGN_GAZEBO_RESOURCE_PATH to include both worlds and meshes
+    if 'IGN_GAZEBO_RESOURCE_PATH' in os.environ:
+        gz_resource_path = os.environ['IGN_GAZEBO_RESOURCE_PATH'] + os.pathsep + gz_world_path + os.pathsep + mesh_path
+    else:
+        gz_resource_path = gz_world_path + os.pathsep + mesh_path
+
+    # Set environment variable
+    ign_resource_path_update = SetEnvironmentVariable(name='IGN_GAZEBO_RESOURCE_PATH', value=gz_resource_path)
 
     # Include the Gazebo launch file
     launch_gazebo = IncludeLaunchDescription(
@@ -36,16 +54,20 @@ def generate_launch_description():
     }.items(),
     )
 
-    # Include extra models in the world
-    sdf_path = os.path.join(get_package_share_directory('simulation_package'), 'worlds', 'maze.sdf')
-    # Spawn extra models (not robots) into the empty world
+    # Add features
     gz_spawn_objects = Node(package='ros_gz_sim', executable='create',
     arguments=['-file', sdf_path,
-    '-x', '-10',
-    '-y', '-10',
+    '-x', '2.0',
+    '-y', '0.5',
     '-z', '0.0'],
     output='screen'
     )
+ 
+    # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
+    node_spawn_entity = Node(package='ros_gz_sim', executable='create',
+                        arguments=['-topic', '/robot_description',
+                                   '-z', '0.5'],
+                        output='screen')
  
     # robot state publisher node
     node_robot_state_publisher = Node(
@@ -90,6 +112,7 @@ def generate_launch_description():
     )
 
     ld.add_action(SetParameter(name='use_sim_time', value=True))
+    ld.add_action(ign_resource_path)
     ld.add_action(ign_resource_path_update)
     ld.add_action(launch_gazebo)
     ld.add_action(gz_spawn_objects)

@@ -20,6 +20,7 @@ setup(
 
         # Include world (.sdf or .dae) files
         (os.path.join('share', package_name, 'worlds'), glob(os.path.join('worlds', '**/**.[sd][da][fe]'), recursive=True)),
+        
         # Include launch files
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         # Include config (.yaml) files

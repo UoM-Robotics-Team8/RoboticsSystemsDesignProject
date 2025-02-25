@@ -24,9 +24,11 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([get_package_share_directory('simulation_package'), '/launch', '/nav.launch.py']),
         launch_arguments={}.items(),
     )
+    
+    ld.add_action(launch_sim)
 
     ld.add_action(launch_slam)
-    ld.add_action(launch_sim)
+    
     ld.add_action(launch_nav)
 
     return ld
