@@ -5,7 +5,6 @@ from launch.actions import IncludeLaunchDescription
 from launch_ros.actions import Node, SetParameter
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
-
 def generate_launch_description():
     ld = LaunchDescription()
 
@@ -25,7 +24,7 @@ def generate_launch_description():
       PythonLaunchDescriptionSource([os.path.join(
          get_package_share_directory('slam_toolbox'), 'launch'),
          '/online_async_launch.py'])
-      )
+    )
 
     # Rviz node
     rviz_config_file = os.path.join(get_package_share_directory(pkg_name), 'rviz', 'nav2.rviz')
@@ -46,4 +45,5 @@ def generate_launch_description():
     ld.add_action(launch_slam_toolbox)
     # Visualisation
     ld.add_action(node_rviz)
+
     return ld

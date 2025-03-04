@@ -18,15 +18,19 @@ setup(
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.stl'))),
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.dae'))),
 
-        # Include world (.sdf or .dae) files
-        (os.path.join('share', package_name, 'worlds'), glob(os.path.join('worlds', '**/**.[sd][da][fe]'), recursive=True)),
-        
+        # Include world (.sdf or dae) files
+        (os.path.join('share', package_name, 'worlds'), glob(os.path.join('worlds', '*/*.[sd][da][fe]'), recursive=True)),
+        (os.path.join('share', package_name, 'worlds'), glob(os.path.join('worlds', '*.sdf'))),
         # Include launch files
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         # Include config (.yaml) files
         (os.path.join('share', package_name, 'config'), glob(os.path.join('config', '*.*yaml*'))),
 	    # Include map (.yaml and .pgm) files
         (os.path.join('share', package_name, 'maps'), glob(os.path.join('maps', '*.[yp][ag][m]'))),
+        # Include rviz (.rviz) files
+        (os.path.join('share', package_name, 'rviz'), glob(os.path.join('rviz', '*.rviz'))),
+        # Include behaviour tree xmls
+        (os.path.join('share', package_name, 'behaviour'), glob(os.path.join('behaviour', '*.xml'))),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -13,13 +13,8 @@ def generate_launch_description():
     # Specify the name of the package and path to xacro file in external package
     pkg_name = 'hardware_package'
 
-    file_subpath = 'urdf/leo.urdf.xacro'
+    file_subpath = 'urdf/leo_rover.urdf.xacro'
 
-    # Set ignition resource path (so it can find your world files)
-    resource_paths = [os.path.join(get_package_prefix(pkg_name), 'share'), 
-                      os.path.join(get_package_share_directory(pkg_name), "worlds")] #os.path.join(get_package_prefix(pkg_name), 'share')
- 
-    
     # Use xacro to process the URDF file
     xacro_file = os.path.join(get_package_share_directory(pkg_name),file_subpath)
     robot_description_raw = xacro.process_file(xacro_file).toxml()                                                  
@@ -40,7 +35,7 @@ def generate_launch_description():
     )
 
     # Rviz node
-    rviz_config_file = os.path.join(get_package_share_directory(pkg_name), 'rviz', 'slam.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory(pkg_name), 'rviz', 'nav2.rviz')
     node_rviz = Node(
         package='rviz2',
         namespace='',

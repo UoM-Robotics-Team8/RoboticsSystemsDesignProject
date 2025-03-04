@@ -5,28 +5,27 @@ from launch_ros.actions import SetParameter, Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 
+
 def generate_launch_description():
     ld = LaunchDescription()
 
-    pkg = get_package_share_directory('simulation_package')
+    # Parameters, Nodes and Launch files go here
 
-    # define behaviour tree
-    bt_xml = PathJoinSubstitution([pkg, 'behaviour', 'nav_to_pose.xml'])
-
+    # Declare package directory
+    pkg_name = get_package_share_directory('simulation_package')
     # Necessary fixes
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
     lifecycle_nodes = [
-        'controller_server',
         'planner_server',
         'behaviour_server',
         'bt_navigator',
     ]
 
+
     # LOAD PARAMETERS FROM YAML FILES
-    config_bt_nav     = PathJoinSubstitution([pkg, 'config', 'bt_nav.yaml'])
-    config_planner    = PathJoinSubstitution([pkg, 'config', 'planner.yaml'])
-    config_controller = PathJoinSubstitution([pkg, 'config', 'controller.yaml'])
+    config_bt_nav = PathJoinSubstitution([pkg_name, 'config', 'bt_nav.yaml'])
+    config_planner = PathJoinSubstitution([pkg_name, 'config', 'planner.yaml'])
 
     # Behaviour Tree Navigator
     node_bt_nav = Node(
@@ -34,7 +33,7 @@ def generate_launch_description():
         executable='bt_navigator',
         name='bt_navigator',
         output='screen',
-        parameters=[config_bt_nav,{'default_nav_to_pose_bt_xml' : bt_xml}],
+        parameters=[config_bt_nav],
         remappings=remappings,
     )
 
@@ -48,27 +47,17 @@ def generate_launch_description():
         remappings=remappings,
     )
 
-    # Planner Server Node
     node_planner = Node(
         package='nav2_planner',
         executable='planner_server',
         name='planner_server',
         output='screen',
         parameters=[config_planner],
-        remappings=remappings,
-    )
-
-    # Controller Server Node
-    node_controller = Node(
-        package='nav2_controller',
-        executable='controller_server',
-        name='controller_server',
-        output='screen',
-        parameters=[config_controller],
-        remappings=remappings,
+        remappings=remappings
     )
 
     # Lifecycle Node Manager to automatically start lifecycles nodes (from list)
+
     node_lifecycle_manager = Node(
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
@@ -77,10 +66,12 @@ def generate_launch_description():
         parameters=[{'autostart': True}, {'node_names': lifecycle_nodes}],
     )
 
+
+    # Add actions to LaunchDescription
+    ld.add_action(SetParameter(name='use_sim_time', value=True))
     ld.add_action(node_bt_nav)
     ld.add_action(node_behaviour)
     ld.add_action(node_planner)
-    ld.add_action(node_controller)
     ld.add_action(node_lifecycle_manager)
 
     return ld

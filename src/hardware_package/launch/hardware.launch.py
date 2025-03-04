@@ -25,8 +25,21 @@ def generate_launch_description():
                                                     '/nav.launch.py'])
     )
 
+    launch_explore = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([get_package_share_directory('explore_lite'), '/launch', 
+                                                    '/explore.launch.py']),
+        launch_arguments={}.items(),
+    )
+
+    launch_depth_camera = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory(pkg_name), 'launch'),
+                                                    '/depth_camera.launch.py'])
+    )
+
     ld.add_action(launch_slam)
     ld.add_action(launch_lidar)
     ld.add_action(launch_nav)
+    ld.add_action(launch_explore)
+    ld.add_action(launch_depth_camera)
 
     return ld

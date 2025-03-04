@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="leo_rover">
 
-    <xacro:property name="wheel_seperation" value="0.359" />
+    <xacro:property name="wheel_separation" value="0.359" />
     <xacro:property name="wheelbase" value="0.296" />
     <xacro:property name="wheel_diameter" value="0.130" />
     <xacro:property name="wheel_thickness" value="0.066" />
@@ -13,7 +13,7 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/Chassis.dae" scale="1 1 1" />
+                <mesh filename="package://simulation_package/meshes/Chassis.dae" scale="1 1 1" />
             </geometry>
         </visual>
         <inertial>
@@ -26,17 +26,21 @@
         </inertial>
         <collision>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/Chass_outline.stl" />
+                <mesh filename="package://simulation_package/meshes/Chassis_outline.stl" />
             </geometry>
         </collision>
+        
     </link>
 
     <link name="wheel_FR_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/WheelA.dae" />
+                <cylinder length="${wheel_thickness}" radius="${wheel_diameter/2}" />
             </geometry>
         </visual>
+        <material name="black">
+            <color rgba="0 0 0 1" />
+        </material>
 
         <collision>
             <geometry>
@@ -45,15 +49,25 @@
         </collision>
 
         <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertial>
+          <mass value="0.283642"/>
+          <origin xyz="0 0.030026 0"/>
+          <inertia
+            ixx="0.000391"  ixy="0.00000123962" ixz="5.52582e-7"
+            iyy="0.0004716" iyz="-0.000002082042"
+            izz="0.000391"/>
+        </inertial>
     </link>
 
     <link name="wheel_FL_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/WheelA.dae" />
+                <cylinder length="${wheel_thickness}" radius="${wheel_diameter/2}" />
             </geometry>
         </visual>
-
+        <material name="black">
+            <color rgba="0 0 0 1" />
+        </material>
         <collision>
             <geometry>
                 <cylinder length="${wheel_thickness}" radius="${wheel_diameter/2}" />
@@ -61,14 +75,25 @@
         </collision>
 
         <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertial>
+          <mass value="0.283642"/>
+          <origin xyz="0 0.030026 0"/>
+          <inertia
+            ixx="0.000391"  ixy="0.00000123962" ixz="5.52582e-7"
+            iyy="0.0004716" iyz="-0.000002082042"
+            izz="0.000391"/>
+        </inertial>
     </link>
 
     <link name="wheel_RR_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/WheelA.dae" />
+                <cylinder length="${wheel_thickness}" radius="${wheel_diameter/2}" />
             </geometry>
         </visual>
+        <material name="black">
+            <color rgba="0 0 0 1" />
+        </material>
 
         <collision>
             <geometry>
@@ -77,14 +102,26 @@
         </collision>
 
         <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertial>
+          <mass value="0.283642"/>
+          <origin xyz="0 0.030026 0"/>
+          <inertia
+            ixx="0.000391"  ixy="0.00000123962" ixz="5.52582e-7"
+            iyy="0.0004716" iyz="-0.000002082042"
+            izz="0.000391"/>
+        </inertial>
     </link>
 
     <link name="wheel_RL_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/WheelA.dae" />
+                <cylinder length="${wheel_thickness}" radius="${wheel_diameter/2}" />
             </geometry>
         </visual>
+        <material name="black">
+            <color rgba="0 0 0 1" />
+        </material>
+            
 
         <collision>
             <geometry>
@@ -93,12 +130,20 @@
         </collision>
 
         <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertial>
+          <mass value="0.283642"/>
+          <origin xyz="0 0.030026 0"/>
+          <inertia
+            ixx="0.000391"  ixy="0.00000123962" ixz="5.52582e-7"
+            iyy="0.0004716" iyz="-0.000002082042"
+            izz="0.000391"/>
+        </inertial>
     </link>
 
     <link name="lidar_link">
         <visual>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
+                <mesh filename="package://simulation_package/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
             </geometry>
             <material name="red">
                    <color rgba="1 0 0 1" />
@@ -111,7 +156,7 @@
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://hardware_package/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
+                <mesh filename="package://simulation_package/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
             </geometry>
             <material name="blue">
                 <color rgba="0 0 1 1.0"/>
@@ -144,35 +189,39 @@
         <parent link="base_link"/>
         <child link="wheel_FR_link"/>
 
-        <origin xyz="${wheelbase/2} ${wheel_seperation/2} 0" rpy="0 0 0" />
+        <origin xyz="${wheelbase/2} -${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_FL_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_FL_link"/>
 
-        <origin xyz="${wheelbase/2} -${wheel_seperation/2} 0" rpy="0 0 0" />
+        <origin xyz="${wheelbase/2} ${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_RR_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_RR_link"/>
 
-        <origin xyz="-${wheelbase/2} ${wheel_seperation/2} 0" rpy="0 0 0" />
+        <origin xyz="-${wheelbase/2} -${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="base_RL_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_RL_link"/>
 
-        <origin xyz="-${wheelbase/2} -${wheel_seperation/2} 0" rpy="0 0 0" />
+        <origin xyz="-${wheelbase/2} ${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <axis xyz="0 0 1" />
     </joint>
 
     <joint name="lidar_base_joint" type="fixed">
         <parent link="base_link"/>
         <child link="lidar_link"/>
 
-        <origin xyz="0.02 0 0.05" rpy="0 0 0" />
+        <origin xyz="0.02 0.001 0.05" rpy="0 0 0" />
     </joint>
 
     <joint name="sled_base_joint" type="fixed">
@@ -188,7 +237,4 @@
 
         <origin xyz="0.155 0 0" rpy="-1.57 0 -1.57" />
     </joint>
-
-    
-    
 </robot>

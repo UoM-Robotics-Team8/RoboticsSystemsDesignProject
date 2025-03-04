@@ -15,7 +15,7 @@ def generate_launch_description():
 
     launch_lidar = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('rplidar_ros'), 'launch'),
-                                       '/view_rplidar_a2m12_launch.py'])
+                                       '/rplidar_a2m12_launch.py'])
     )
 
     node_lidar = Node(

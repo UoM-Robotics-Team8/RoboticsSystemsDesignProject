@@ -37,6 +37,10 @@ def generate_launch_description():
     gz_world_path = os.path.join(package_path, "worlds")
     mesh_path = os.path.join(package_path, "meshes")
 
+    # gz_world_path = "/home/delewlew/RoboticsSystemsDesignProject/src/simulation_package/worlds"
+    # mesh_path = "/home/delewlew/RoboticsSystemsDesignProject/src/simulation_package/meshes"
+
+
     # Update IGN_GAZEBO_RESOURCE_PATH to include both worlds and meshes
     if 'IGN_GAZEBO_RESOURCE_PATH' in os.environ:
         gz_resource_path = os.environ['IGN_GAZEBO_RESOURCE_PATH'] + os.pathsep + gz_world_path + os.pathsep + mesh_path
@@ -76,12 +80,6 @@ def generate_launch_description():
         output='screen',
         parameters=[{'robot_description': robot_description_raw}] # add other parameters here if required
     )
-
-    # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
-    node_spawn_entity = Node(package='ros_gz_sim', executable='create',
-                        arguments=['-topic', '/robot_description',
-                                   '-z', '0.5'],
-                        output='screen')
     
     # Bridge between Gazebo and ROS2 topics
     # https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
