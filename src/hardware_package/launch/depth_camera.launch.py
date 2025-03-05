@@ -8,10 +8,10 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     ld = LaunchDescription()
 
-    pkg_name = "hardware_package"
+    pkg_name = ""
 
     node_depth_sensor = Node(
-        package="object_detection",
+        package="object_detect_package",
         executable="image_subscriber",
         output="screen"
     )

@@ -13,7 +13,7 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <mesh filename="package://simulation_package/meshes/Chassis.dae" scale="1 1 1" />
+                <mesh filename="package://hardware_package/meshes/Chassis.dae" scale="1 1 1" />
             </geometry>
         </visual>
         <inertial>
@@ -26,7 +26,7 @@
         </inertial>
         <collision>
             <geometry>
-                <mesh filename="package://simulation_package/meshes/Chassis_outline.stl" />
+                <mesh filename="package://hardware_package/meshes/Chassis_outline.stl" />
             </geometry>
         </collision>
         
@@ -143,7 +143,7 @@
     <link name="lidar_link">
         <visual>
             <geometry>
-                <mesh filename="package://simulation_package/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
+                <mesh filename="package://hardware_package/meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
             </geometry>
             <material name="red">
                    <color rgba="1 0 0 1" />
@@ -156,7 +156,7 @@
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://simulation_package/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
+                <mesh filename="package://hardware_package/meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
             </geometry>
             <material name="blue">
                 <color rgba="0 0 1 1.0"/>
