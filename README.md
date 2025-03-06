@@ -14,3 +14,4 @@ Required packages:
 - slam_toolbox: https://github.com/SteveMacenski/slam_toolbox
 - Nav2: https://github.com/ros-navigation/navigation2
 - rplidar_ros: https://github.com/Slamtec/rplidar_ros
+- robot_localization: https://github.com/cra-ros-pkg/robot_localization
