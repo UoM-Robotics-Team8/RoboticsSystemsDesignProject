@@ -20,7 +20,7 @@ class LidarSensor(Node):
 
         self.lidar_data_publisher = self.create_publisher(
             msg_type=LaserScan,
-            topic='/filtered_lidar_data',
+            topic='/scan_filtered',
             qos_profile=10
         )
 

@@ -28,10 +28,21 @@ def generate_launch_description():
     )
 
     # Start SLAM Toolbox with default parameters
-    launch_slam_toolbox = IncludeLaunchDescription(
-      PythonLaunchDescriptionSource([os.path.join(
-         get_package_share_directory('slam_toolbox'), 'launch'),
-         '/online_async_launch.py'])
+    # launch_slam_toolbox = IncludeLaunchDescription(
+    #   PythonLaunchDescriptionSource([os.path.join(
+    #      get_package_share_directory('slam_toolbox'), 'launch'),
+    #      '/online_async_launch.py'])
+    # )
+
+    launch_slam_toolbox = Node(
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox',
+        remappings=[('/scan', '/scan_filtered')],
+        parameters=[{
+            'transform_timeout' : 1,
+            'max_laser_queue_size' : 100,
+        }]
     )
 
     # Rviz node
