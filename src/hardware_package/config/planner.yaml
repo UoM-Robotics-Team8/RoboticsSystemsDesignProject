@@ -19,6 +19,11 @@ global_costmap:
       use_sim_time: True
       # footprint: []
       # footprint_padding: 0.01
+      #width: hardcode the width
+      width: 100
+      height: 100
+      #hardcode the height                                      
+      #transform_tolerance:0.5 allows tf delays
       robot_radius: 0.175
       resolution: 0.06
       track_unknown_space: true
@@ -29,7 +34,7 @@ global_costmap:
         enabled: True
         observation_sources: scan_source
         scan_source:
-          topic: /filtered_lidar_data
+          topic: /scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True

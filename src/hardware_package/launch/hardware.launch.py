@@ -36,10 +36,17 @@ def generate_launch_description():
                                                     '/depth_camera.launch.py'])
     )
 
+    launch_efk = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory(pkg_name), 'launch'),
+                                                    '/ekf.launch.py'])
+    )
+
+    ld.add_action(launch_efk)
     ld.add_action(launch_lidar)
     ld.add_action(launch_slam)
     ld.add_action(launch_nav)
     ld.add_action(launch_explore)
     ld.add_action(launch_depth_camera)
+
 
     return ld
