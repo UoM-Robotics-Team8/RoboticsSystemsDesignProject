@@ -15,3 +15,4 @@ Required packages:
 - Nav2: https://github.com/ros-navigation/navigation2
 - rplidar_ros: https://github.com/Slamtec/rplidar_ros
 - robot_localization: https://github.com/cra-ros-pkg/robot_localization
+- m-explore-ros2: https://github.com/robo-friends/m-explore-ros2

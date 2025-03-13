@@ -42,6 +42,8 @@ def generate_launch_description():
         parameters=[{
             'transform_timeout' : 1,
             'max_laser_queue_size' : 100,
+            'use_sim_time' : 'false',
+            'odom_frame' : "odom",
         }]
     )
 

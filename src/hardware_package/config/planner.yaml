@@ -34,7 +34,11 @@ global_costmap:
         enabled: True
         observation_sources: scan_source
         scan_source:
+<<<<<<< HEAD
           topic: /scan
+=======
+          topic: /scan_filtered
+>>>>>>> 1af6d3e7afe99d39327cb74ec2fc218c7230906f
           max_obstacle_height: 2.0
           clearing: True
           marking: True

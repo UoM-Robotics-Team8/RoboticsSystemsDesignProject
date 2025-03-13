@@ -46,7 +46,7 @@ def generate_launch_description():
 
     node_lidar = Node(
         package='hardware_package',
-        executable='lidar_node.py',
+        executable='lidar_node',
         output='screen'
     )
 
