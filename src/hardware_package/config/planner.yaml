@@ -1,12 +1,12 @@
 planner_server:
   ros__parameters:
     expected_planner_frequency: 20.0
-    use_sim_time: True
+    use_sim_time: false
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5
-      use_astar: false
+      use_astar: true
       allow_unknown: true
 
 global_costmap:
@@ -16,7 +16,7 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: map
       robot_base_frame: base_link
-      use_sim_time: True
+      use_sim_time: false
       # footprint: []
       # footprint_padding: 0.01
       #width: hardcode the width
@@ -34,11 +34,7 @@ global_costmap:
         enabled: True
         observation_sources: scan_source
         scan_source:
-<<<<<<< HEAD
-          topic: /scan
-=======
           topic: /scan_filtered
->>>>>>> 1af6d3e7afe99d39327cb74ec2fc218c7230906f
           max_obstacle_height: 2.0
           clearing: True
           marking: True

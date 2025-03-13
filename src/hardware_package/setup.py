@@ -26,6 +26,7 @@ setup(
 
         # Include URDF (.urdf) files
         (os.path.join('share', package_name, 'urdf'), glob(os.path.join('urdf', '*.urdf')) + glob(os.path.join('urdf', '*.xacro'))),
+        (os.path.join('share', package_name, 'urdf'), glob(os.path.join('urdf', '*.xacro'))),
 	    # Include mesh (.stl) files
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.stl'))),
         (os.path.join('share', package_name, 'meshes'), glob(os.path.join('meshes', '*.dae'))),

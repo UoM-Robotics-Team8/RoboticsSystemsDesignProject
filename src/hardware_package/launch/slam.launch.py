@@ -13,7 +13,7 @@ def generate_launch_description():
     # Specify the name of the package and path to xacro file in external package
     pkg_name = 'hardware_package'
 
-    file_subpath = 'urdf/leo_rover.urdf.xacro'
+    file_subpath = 'urdf/leo.urdf.xacro'
 
     # Use xacro to process the URDF file
     xacro_file = os.path.join(get_package_share_directory(pkg_name),file_subpath)
