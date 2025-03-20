@@ -1,0 +1,21 @@
+[1.794s] Invoking command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/hardware_package': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/hardware_package build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/install.log --single-version-externally-managed install_data
+[2.013s] running egg_info
+[2.014s] writing ../../build/hardware_package/hardware_package.egg-info/PKG-INFO
+[2.014s] writing dependency_links to ../../build/hardware_package/hardware_package.egg-info/dependency_links.txt
+[2.014s] writing entry points to ../../build/hardware_package/hardware_package.egg-info/entry_points.txt
+[2.015s] writing requirements to ../../build/hardware_package/hardware_package.egg-info/requires.txt
+[2.015s] writing top-level names to ../../build/hardware_package/hardware_package.egg-info/top_level.txt
+[2.019s] reading manifest file '../../build/hardware_package/hardware_package.egg-info/SOURCES.txt'
+[2.021s] writing manifest file '../../build/hardware_package/hardware_package.egg-info/SOURCES.txt'
+[2.022s] running build
+[2.022s] running build_py
+[2.022s] running install
+[2.022s] running install_lib
+[2.025s] running install_data
+[2.029s] running install_egg_info
+[2.032s] removing '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package-0.0.0-py3.10.egg-info' (and everything under it)
+[2.032s] Copying ../../build/hardware_package/hardware_package.egg-info to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package-0.0.0-py3.10.egg-info
+[2.033s] running install_scripts
+[2.065s] Installing lidar_node script to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/hardware_package
+[2.066s] writing list of installed files to '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/install.log'
+[2.093s] Invoked command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/hardware_package' returned '0': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/hardware_package build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/install.log --single-version-externally-managed install_data

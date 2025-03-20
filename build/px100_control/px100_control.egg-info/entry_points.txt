@@ -1,0 +1,3 @@
+[console_scripts]
+px100_node = px100_control.px100_node:main
+

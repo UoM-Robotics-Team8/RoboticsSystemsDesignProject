@@ -1,0 +1,3 @@
+[console_scripts]
+lidar_node = hardware_package.lidar_node:main
+

@@ -1,0 +1,3 @@
+[console_scripts]
+image_subscriber = object_detect_package.image_subscriber:main
+

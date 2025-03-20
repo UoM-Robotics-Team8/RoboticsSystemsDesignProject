@@ -1,0 +1,73 @@
+[1.790s] Invoking command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/hardware_package': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/hardware_package build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/install.log --single-version-externally-managed install_data
+[2.184s] running egg_info
+[2.185s] creating ../../build/hardware_package/hardware_package.egg-info
+[2.185s] writing ../../build/hardware_package/hardware_package.egg-info/PKG-INFO
+[2.186s] writing dependency_links to ../../build/hardware_package/hardware_package.egg-info/dependency_links.txt
+[2.186s] writing entry points to ../../build/hardware_package/hardware_package.egg-info/entry_points.txt
+[2.186s] writing requirements to ../../build/hardware_package/hardware_package.egg-info/requires.txt
+[2.186s] writing top-level names to ../../build/hardware_package/hardware_package.egg-info/top_level.txt
+[2.186s] writing manifest file '../../build/hardware_package/hardware_package.egg-info/SOURCES.txt'
+[2.189s] reading manifest file '../../build/hardware_package/hardware_package.egg-info/SOURCES.txt'
+[2.190s] writing manifest file '../../build/hardware_package/hardware_package.egg-info/SOURCES.txt'
+[2.190s] running build
+[2.190s] running build_py
+[2.190s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build
+[2.190s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib
+[2.190s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib/hardware_package
+[2.190s] copying hardware_package/__init__.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib/hardware_package
+[2.191s] copying hardware_package/lidar_node.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib/hardware_package
+[2.191s] running install
+[2.191s] running install_lib
+[2.192s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package
+[2.192s] copying /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib/hardware_package/__init__.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package
+[2.192s] copying /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/build/lib/hardware_package/lidar_node.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package
+[2.193s] byte-compiling /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package/__init__.py to __init__.cpython-310.pyc
+[2.193s] byte-compiling /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package/lidar_node.py to lidar_node.cpython-310.pyc
+[2.194s] running install_data
+[2.194s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/ament_index
+[2.194s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/ament_index/resource_index
+[2.194s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/ament_index/resource_index/packages
+[2.194s] copying resource/hardware_package -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/ament_index/resource_index/packages
+[2.194s] copying package.xml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package
+[2.194s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/urdf
+[2.194s] copying urdf/leo_rover.urdf.xacro -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/urdf
+[2.195s] copying urdf/macros.xacro -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/urdf
+[2.195s] copying urdf/leo.urdf.xacro -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/urdf
+[2.195s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.195s] copying meshes/Chassis_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.195s] copying meshes/Wheel_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.195s] copying meshes/Generic_100mm_lidar.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.196s] copying meshes/Rocker_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.196s] copying meshes/Mecanum_wheel_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.196s] copying meshes/Rover_mounts_v1.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.197s] copying meshes/Rocker.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.200s] copying meshes/WheelMecanumB.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.205s] copying meshes/Chassis.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.218s] copying meshes/WheelB.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.221s] copying meshes/WheelMecanumA.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.230s] copying meshes/WheelA.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.233s] copying meshes/Antenna.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/meshes
+[2.233s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/worlds
+[2.233s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/nav.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/lidar.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/ekf.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/slam.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/depth_camera.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] copying launch/hardware.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/launch
+[2.234s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.234s] copying config/ekf_node.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.234s] copying config/bt_nav.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.234s] copying config/lidar_filter.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.234s] copying config/controller.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.234s] copying config/planner.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/config
+[2.235s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/maps
+[2.235s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/rviz
+[2.235s] copying rviz/view_model.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/rviz
+[2.235s] copying rviz/nav2.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/rviz
+[2.235s] copying rviz/slam.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/share/hardware_package/rviz
+[2.235s] running install_egg_info
+[2.235s] Copying ../../build/hardware_package/hardware_package.egg-info to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/python3.10/site-packages/hardware_package-0.0.0-py3.10.egg-info
+[2.235s] running install_scripts
+[2.250s] Installing lidar_node script to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/hardware_package/lib/hardware_package
+[2.251s] writing list of installed files to '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/hardware_package/install.log'

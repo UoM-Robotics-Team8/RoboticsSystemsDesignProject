@@ -1,0 +1,74 @@
+[1.842s] Invoking command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/simulation_package': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/simulation_package build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/install.log --single-version-externally-managed install_data
+[2.118s] running egg_info
+[2.118s] creating ../../build/simulation_package/simulation_package.egg-info
+[2.118s] writing ../../build/simulation_package/simulation_package.egg-info/PKG-INFO
+[2.118s] writing dependency_links to ../../build/simulation_package/simulation_package.egg-info/dependency_links.txt
+[2.118s] writing entry points to ../../build/simulation_package/simulation_package.egg-info/entry_points.txt
+[2.118s] writing requirements to ../../build/simulation_package/simulation_package.egg-info/requires.txt
+[2.118s] writing top-level names to ../../build/simulation_package/simulation_package.egg-info/top_level.txt
+[2.119s] writing manifest file '../../build/simulation_package/simulation_package.egg-info/SOURCES.txt'
+[2.120s] reading manifest file '../../build/simulation_package/simulation_package.egg-info/SOURCES.txt'
+[2.120s] writing manifest file '../../build/simulation_package/simulation_package.egg-info/SOURCES.txt'
+[2.120s] running build
+[2.120s] running build_py
+[2.121s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build
+[2.121s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build/lib
+[2.121s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build/lib/simulation_package
+[2.121s] copying simulation_package/__init__.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build/lib/simulation_package
+[2.121s] running install
+[2.121s] running install_lib
+[2.121s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages/simulation_package
+[2.121s] copying /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/build/lib/simulation_package/__init__.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages/simulation_package
+[2.121s] byte-compiling /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages/simulation_package/__init__.py to __init__.cpython-310.pyc
+[2.122s] running install_data
+[2.122s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/ament_index
+[2.122s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/ament_index/resource_index
+[2.122s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/ament_index/resource_index/packages
+[2.122s] copying resource/simulation_package -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/ament_index/resource_index/packages
+[2.122s] copying package.xml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package
+[2.122s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/urdf
+[2.122s] copying urdf/leo_rover.urdf.xacro -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/urdf
+[2.122s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.123s] copying meshes/Chassis_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.123s] copying meshes/Wheel_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.123s] copying meshes/Generic_100mm_lidar.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.125s] copying meshes/Rocker_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.125s] copying meshes/Mecanum_wheel_outline.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.125s] copying meshes/Rover_mounts_v1.stl -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.125s] copying meshes/Rocker.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.126s] copying meshes/WheelMecanumB.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.132s] copying meshes/Chassis.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.143s] copying meshes/WheelB.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.146s] copying meshes/WheelMecanumA.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.151s] copying meshes/WheelA.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.153s] copying meshes/Antenna.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/meshes
+[2.153s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/worlds
+[2.153s] copying worlds/meshes/wall.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/worlds
+[2.153s] copying worlds/meshes/hexagon.dae -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/worlds
+[2.154s] copying worlds/model.sdf -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/worlds
+[2.154s] copying worlds/tb3.sdf -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/worlds
+[2.154s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/launch
+[2.154s] copying launch/run_simulation.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/launch
+[2.154s] copying launch/nav.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/launch
+[2.154s] copying launch/simulation_bringup.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/launch
+[2.154s] copying launch/slam.launch.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/launch
+[2.154s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.154s] copying config/ekf_node.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.154s] copying config/explore.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.154s] copying config/diff_drive_control.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.155s] copying config/bt_nav.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.155s] copying config/controller.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.155s] copying config/planner.yaml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/config
+[2.155s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/maps
+[2.155s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/rviz
+[2.155s] copying rviz/view_model.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/rviz
+[2.155s] copying rviz/nav2.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/rviz
+[2.155s] copying rviz/slam.rviz -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/rviz
+[2.155s] creating /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/behaviour
+[2.155s] copying behaviour/nav_tree.xml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/behaviour
+[2.155s] copying behaviour/bt_simple_nav.xml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/behaviour
+[2.155s] copying behaviour/nav_to_pose.xml -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/share/simulation_package/behaviour
+[2.156s] running install_egg_info
+[2.156s] Copying ../../build/simulation_package/simulation_package.egg-info to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/simulation_package/lib/python3.10/site-packages/simulation_package-0.0.0-py3.10.egg-info
+[2.156s] running install_scripts
+[2.172s] writing list of installed files to '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/simulation_package/install.log'
