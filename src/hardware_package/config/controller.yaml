@@ -73,7 +73,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.06
-      robot_radius: 0.175
+      robot_radius: 0.3
       plugins: ["obstacle_layer", "inflation_layer"]
       always_send_full_costmap: True
       inflation_layer:

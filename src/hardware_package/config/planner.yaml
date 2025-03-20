@@ -24,7 +24,7 @@ global_costmap:
       height: 100
       #hardcode the height                                      
       #transform_tolerance:0.5 allows tf delays
-      robot_radius: 0.175
+      robot_radius: 0.3
       resolution: 0.06
       track_unknown_space: true
       always_send_full_costmap: True
