@@ -27,7 +27,7 @@ class PX100Node(Node):
 
         self.pose_subscriber = self.create_subscription(
             msg_type=Point,
-            topic="/camera/block_poses",
+            topic="/object_center_distance",
             callback=self.pose_callback,
             qos_profile=1
         )
