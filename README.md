@@ -1,4 +1,4 @@
-### Robotics Systems Design Project
+# Robotics Systems Design Project
 
 GitHub Repository for Team 8 of the MSc Robotics 2024/25 at the University of Manchester for module Robotic Systems Design Project.
 This repository serves as the collaborative workspace for developing the robot for this project.
