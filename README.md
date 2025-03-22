@@ -22,7 +22,9 @@ The goal of the project is to design a robot that is capable of fully autononmou
 This codebased has been designed to run on ROS2 Humble: https://docs.ros.org/en/humble/index.html
 
 Clone this repository into your workspace:
-`git clone https://github.com/alyhatem/RoboticsSystemsDesignProject.git`
+```
+git clone https://github.com/alyhatem/RoboticsSystemsDesignProject.git
+```
 
 Then clone dependency packages inside the /src folder of the cloned repository:
 ```
