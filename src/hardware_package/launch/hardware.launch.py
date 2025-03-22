@@ -46,7 +46,7 @@ def generate_launch_description():
     ld.add_action(launch_slam)
     ld.add_action(launch_nav)
     ld.add_action(launch_explore)
-    ld.add_action(launch_depth_camera)
+    #ld.add_action(launch_depth_camera)
 
 
     return ld
