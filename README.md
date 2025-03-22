@@ -23,7 +23,7 @@ The goal of the project is to design a robot that is capable of fully autononmou
 
 Clone this repository into your workspace:
 ```
-git clone https://github.com/alyhatem/RoboticsSystemsDesignProject.git
+https://github.com/UoM-Robotics-Team8/RoboticsSystemsDesignProject.git
 ```
 
 Then clone dependency packages inside the /src folder of the cloned repository:
