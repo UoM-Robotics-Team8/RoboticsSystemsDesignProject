@@ -19,7 +19,7 @@ The goal of the project is to design a robot that is capable of fully autononmou
 - interbotix_ws
 
 ## Installation Instructions:
-This codebased has been designed to run on ROS2 Humble: https://docs.ros.org/en/humble/index.html
+*This codebased has been designed to run on ROS2 Humble: https://docs.ros.org/en/humble/index.html*
 
 Clone this repository into your workspace:
 ```
