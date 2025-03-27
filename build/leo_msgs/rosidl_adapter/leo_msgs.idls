@@ -1,5 +1,0 @@
-/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/leo_msgs/rosidl_adapter/leo_msgs:msg/Imu.idl
-/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/leo_msgs/rosidl_adapter/leo_msgs:msg/WheelOdom.idl
-/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/leo_msgs/rosidl_adapter/leo_msgs:msg/WheelOdomMecanum.idl
-/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/leo_msgs/rosidl_adapter/leo_msgs:msg/WheelStates.idl
-/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/leo_msgs/rosidl_adapter/leo_msgs:srv/SetImuCalibration.idl

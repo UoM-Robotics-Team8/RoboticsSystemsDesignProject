@@ -1,4 +1,0 @@
-[console_scripts]
-camera_code = sensors_package.camera_code:main
-lidar_code = sensors_package.lidar_code:main
-
