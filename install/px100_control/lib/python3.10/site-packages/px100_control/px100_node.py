@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
+from std_msgs.msg import Float32MultiArray
 from std_srvs.srv import Trigger
 import numpy as np
 from numpy import pi
@@ -13,26 +14,25 @@ class PX100Node(Node):
     def __init__(self):
         super().__init__("px100_node")
 
-        self.arm_on_server = self.create_service(
+        self.pick_object_server = self.create_service(
             srv_type=Trigger,
             srv_name="/leo_rover/pick_object",
             callback=self.pick_callback
         )
 
-        self.arm_off_server = self.create_service(
+        self.place_object_server = self.create_service(
             srv_type=Trigger,
             srv_name="/leo_rover/place_object",
             callback=self.place_callback
         )
 
         self.pose_subscriber = self.create_subscription(
-            msg_type=Point,
+            msg_type=Float32MultiArray,
             topic="/object_center_distance",
             callback=self.pose_callback,
             qos_profile=1
         )
 
-        self.turned_on: bool = True
         self.H_base_cam = np.array([[0, 0, 1,  0.06],
                                      [1, 0, 0,   0.0],
                                      [0, 1, 0, 0.015],
@@ -52,33 +52,30 @@ class PX100Node(Node):
                          response: Trigger.Response
                          ) -> Trigger.Response:
         """A method that is called to order the manipulator to pick the object."""
-        if self.turned_on:
-            self.H_base_obj = self.H_base_cam @ self.H_cam_obj
 
-            x = self.H_base_obj[0, 3]
-            y = self.H_base_obj[1, 3]
-            z = self.H_base_obj[2, 3]
-            r = np.hypot(x, y) 
-            theta = np.arctan2(y, x)
-            x_traj = r - 0.2458
-            z_traj = z - 0.193
+        self.H_base_obj = self.H_base_cam @ self.H_cam_obj
 
-            ### Best Practices ###
+        x = self.H_base_obj[0, 3]
+        y = self.H_base_obj[1, 3]
+        z = self.H_base_obj[2, 3]
+        r = np.hypot(x, y) 
+        theta = np.arctan2(y, x)
+        x_traj = r - 0.2458
+        z_traj = z - 0.193
 
-            self.bot.arm.go_to_home_pose()
-            self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
-            self.bot.gripper.release()
-            self.bot.arm.set_ee_pose_components(x=x, z=z, pitch=0.0, blocking=True)
-            self.bot.gripper.grasp()
-            self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
-            self.bot.arm.go_to_sleep_pose()
+        self.bot.arm.go_to_home_pose()
+        self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
+        self.bot.gripper.release()
+        # self.bot.arm.set_ee_pose_components(x=r, z=z, pitch=0.0, blocking=True)
+        self.bot.arm.set_ee_cartesian_trajectory(x=x_traj, z=z_traj)
+        self.bot.gripper.grasp()
+        self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
+        self.bot.arm.go_to_sleep_pose()
 
-        else:
-            # Assign to response
-            response.success = False
-            response.message = "Robot is already on"
 
         # Display INFO
+        response.success = True
+        response.message = "Robot has picked object"
         self.get_logger().info(response.message)
 
         return response
@@ -87,19 +84,17 @@ class PX100Node(Node):
                          request: Trigger.Request,
                          response: Trigger.Response
                          ) -> Trigger.Response:
-        if self.turned_on:
-            # Turn Robot Off
-            robot_shutdown()
-            self.turned_on = False
 
-            # Assign to response
-            response.success = True
-            response.message = "Robot has been turned off"
+        self.bot.arm.go_to_home_pose()
+        self.bot.arm.set_single_joint_position(joint_name='waist', position=pi/2)
+        self.bot.arm.set_ee_pose_components(x=0.2, z=0.03, blocking=True)
+        self.bot.gripper.release()
+        self.bot.arm.go_to_home_pose()
+        self.bot.arm.go_to_sleep_pose()
 
-        else:
-            # Assign to response
-            response.success = False
-            response.message = "Robot is already off"
+        # Assign to response
+        response.success = True
+        response.message = "Robot has placed object"
 
         # Display INFO
         self.get_logger().info(response.message)
@@ -108,14 +103,13 @@ class PX100Node(Node):
 
     def pose_callback(self, msg: Point):
         """Method called when msg is received by node"""
-        if self.turned_on:
+        x_msg, y_msg, z_msg = msg.data
 
-            self.H_cam_obj = np.array([[1, 0, 0, msg.x],
-                                       [0, 1, 0, msg.y],
-                                       [0, 0, 1, msg.z],
+
+        self.H_cam_obj = np.array([[1, 0, 0, x_msg],
+                                       [0, 1, 0, y_msg],
+                                       [0, 0, 1, z_msg],
                                        [0, 0, 0,     1]])
-        else:
-            self.get_logger().info("Robot is turned off")
 
 
 def main(args=None):

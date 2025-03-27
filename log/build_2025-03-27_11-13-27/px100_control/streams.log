@@ -1,0 +1,24 @@
+[1.819s] Invoking command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/px100_control': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/px100_control build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/install.log --single-version-externally-managed install_data
+[2.167s] running egg_info
+[2.167s] writing ../../build/px100_control/px100_control.egg-info/PKG-INFO
+[2.167s] writing dependency_links to ../../build/px100_control/px100_control.egg-info/dependency_links.txt
+[2.167s] writing entry points to ../../build/px100_control/px100_control.egg-info/entry_points.txt
+[2.168s] writing requirements to ../../build/px100_control/px100_control.egg-info/requires.txt
+[2.168s] writing top-level names to ../../build/px100_control/px100_control.egg-info/top_level.txt
+[2.168s] reading manifest file '../../build/px100_control/px100_control.egg-info/SOURCES.txt'
+[2.169s] writing manifest file '../../build/px100_control/px100_control.egg-info/SOURCES.txt'
+[2.169s] running build
+[2.169s] running build_py
+[2.169s] copying px100_control/px100_node.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/build/lib/px100_control
+[2.169s] running install
+[2.170s] running install_lib
+[2.170s] copying /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/build/lib/px100_control/px100_node.py -> /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages/px100_control
+[2.170s] byte-compiling /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages/px100_control/px100_node.py to px100_node.cpython-310.pyc
+[2.171s] running install_data
+[2.171s] running install_egg_info
+[2.172s] removing '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages/px100_control-0.0.0-py3.10.egg-info' (and everything under it)
+[2.172s] Copying ../../build/px100_control/px100_control.egg-info to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages/px100_control-0.0.0-py3.10.egg-info
+[2.172s] running install_scripts
+[2.192s] Installing px100_node script to /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/px100_control
+[2.193s] writing list of installed files to '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/install.log'
+[2.220s] Invoked command in '/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/src/px100_control' returned '0': PYTHONPATH=/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/install/px100_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/px100_control build --build-base /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/build install --record /home/mscrobotics2425laptop42/RoboticsSystemsDesignProject/build/px100_control/install.log --single-version-externally-managed install_data
