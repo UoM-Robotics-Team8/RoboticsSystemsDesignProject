@@ -20,20 +20,27 @@ def generate_launch_description():
         'planner_server',
         'behaviour_server',
         'bt_navigator',
+        'controller_server'
     ]
 
+    # Define nav_to_pose behaviour tree
+
+    bt_xml_navtopose_file = PathJoinSubstitution([pkg_name, 'behaviour', 'navigate_through_poses_w_replanning_and_recovery.xml'])
 
     # LOAD PARAMETERS FROM YAML FILES
     config_bt_nav = PathJoinSubstitution([pkg_name, 'config', 'bt_nav.yaml'])
     config_planner = PathJoinSubstitution([pkg_name, 'config', 'planner.yaml'])
+    config_controller = PathJoinSubstitution([pkg_name, 'config', 'controller.yaml'])
 
     # Behaviour Tree Navigator
+
     node_bt_nav = Node(
+
         package='nav2_bt_navigator',
         executable='bt_navigator',
         name='bt_navigator',
         output='screen',
-        parameters=[config_bt_nav],
+        parameters=[config_bt_nav,{'default_nav_to_pose_bt_xml' : bt_xml_navtopose_file}],
         remappings=remappings,
     )
 
@@ -56,6 +63,16 @@ def generate_launch_description():
         remappings=remappings
     )
 
+    # Controller Server Node
+    node_controller = Node(
+        package='nav2_controller',
+        executable='controller_server',
+        name='controller_server',
+        output='screen',
+        parameters=[config_controller],
+        remappings=remappings,
+    )
+
     # Lifecycle Node Manager to automatically start lifecycles nodes (from list)
 
     node_lifecycle_manager = Node(
@@ -72,6 +89,7 @@ def generate_launch_description():
     ld.add_action(node_bt_nav)
     ld.add_action(node_behaviour)
     ld.add_action(node_planner)
+    ld.add_action(node_controller)
     ld.add_action(node_lifecycle_manager)
 
     return ld

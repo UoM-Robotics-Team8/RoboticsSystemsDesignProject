@@ -11,7 +11,7 @@ def generate_launch_description():
 
     # Specify the name of the package and path to xacro file in external package
     pkg_name = 'simulation_package'
-    file_subpath = 'urdf/leo_rover.urdf.xacro'
+    file_subpath = 'urdf/leo_sim.urdf.xacro'
 
     # Set ignition resource path (so it can find your world files)
     ign_resource_path = SetEnvironmentVariable(name='IGN_GAZEBO_RESOURCE_PATH',
@@ -88,23 +88,23 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=  [
             "/clock" + "@rosgraph_msgs/msg/Clock" + "[" + "ignition.msgs.Clock",
-            "/model/leo_rover/odometry" + "@nav_msgs/msg/Odometry" + "[" + "ignition.msgs.Odometry",
-            "/model/leo_rover/scan" + "@sensor_msgs/msg/LaserScan" + "[" + "ignition.msgs.LaserScan",
-            "/model/leo_rover/tf" + "@tf2_msgs/msg/TFMessage" + "[" + "ignition.msgs.Pose_V",
-            "/model/leo_rover/imu" + "@sensor_msgs/msg/Imu" + "[" + "ignition.msgs.IMU",
-            "/model/leo_rover/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
-            "/model/leo_rover/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
-            "/model/leo_rover/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
+            "/model/leo_sim/odometry" + "@nav_msgs/msg/Odometry" + "[" + "ignition.msgs.Odometry",
+            "/model/leo_sim/scan" + "@sensor_msgs/msg/LaserScan" + "[" + "ignition.msgs.LaserScan",
+            "/model/leo_sim/tf" + "@tf2_msgs/msg/TFMessage" + "[" + "ignition.msgs.Pose_V",
+            "/model/leo_sim/imu" + "@sensor_msgs/msg/Imu" + "[" + "ignition.msgs.IMU",
+            "/model/leo_sim/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
+            "/model/leo_sim/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
+            "/model/leo_sim/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
         ],
-        parameters=[{'qos_overrides./leo_rover/subscriber/reliability': 'reliable'}],
+        parameters=[{'qos_overrides./leo_sim/subscriber/reliability': 'reliable'}],
         remappings=[
-            ('/model/leo_rover/odometry', '/odom'),
-            ('/model/leo_rover/scan', '/scan'),
-            ('/model/leo_rover/tf', '/tf'),
-            ('/model/leo_rover/imu', '/imu/data_raw'),
-            ('/model/leo_rover/cmd_vel', '/cmd_vel'),
-            ('/model/leo_rover/camera/image_raw', '/camera'),
-            ('/model/leo_rover/joint_state', '/joint_states'),
+            ('/model/leo_sim/odometry', '/wheel_odom_with_covariance'),
+            ('/model/leo_sim/scan', '/scan'),
+            ('/model/leo_sim/tf', '/tf'),
+            ('/model/leo_sim/imu', '/imu/data_raw'),
+            ('/model/leo_sim/cmd_vel', '/cmd_vel'),
+            ('/model/leo_sim/camera/image_raw', '/camera'),
+            ('/model/leo_sim/joint_state', '/joint_states'),
         ],
         output="screen",
     )
