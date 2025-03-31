@@ -16,22 +16,22 @@ controller_server:
       movement_time_allowance: 10.0
     goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.1
+      yaw_goal_tolerance: 0.1
       stateful: True
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      desired_linear_vel: 0.5
+      desired_linear_vel: 0.4
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.26
+      max_vel_x: 0.2
       max_vel_y: 0.0
       max_vel_theta: 1.0
       min_speed_xy: 0.0
       max_speed_xy: 0.26
       min_speed_theta: 0.0
-      acc_lim_x: 2.5
+      acc_lim_x: 1.0
       acc_lim_y: 0.0
       acc_lim_theta: 3.2
       decel_lim_x: -2.5
@@ -73,13 +73,13 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.06
-      robot_radius: 0.3
+      footprint: "[ [0.2125, 0.224], [-0.2125, 0.224], [-0.2125, -0.224], [0.2125, -0.224] ]"
       plugins: ["obstacle_layer", "inflation_layer"]
       always_send_full_costmap: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
-        inflation_radius: 0.45
+        inflation_radius: 0.2
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
