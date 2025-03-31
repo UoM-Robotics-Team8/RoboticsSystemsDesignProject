@@ -23,8 +23,8 @@ planner_server:
 global_costmap:
   global_costmap:
     ros__parameters:
-      update_frequency: 3.0
-      publish_frequency: 2.0
+      update_frequency: 1.0
+      publish_frequency: 1.0
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
@@ -59,4 +59,4 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
-        inflation_radius: 0.8
+        inflation_radius: 0.5

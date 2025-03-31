@@ -385,5 +385,26 @@
       </imu>
     </sensor>
   </gazebo>
+
+  <!-- FRICTION AND PHYSICS -->
+  <gazebo reference="wheel_FL_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="wheel_FR_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="wheel_RL_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="wheel_RR_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
     
 </robot>

@@ -41,6 +41,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'periodic_map_saver = simulation_package.periodic_map_saver:main'
         ],
     },
 )

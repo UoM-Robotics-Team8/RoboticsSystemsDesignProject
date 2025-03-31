@@ -2,7 +2,7 @@ explore_node:
   ros__parameters:
     robot_base_frame: base_link
     costmap_topic: /global_costmap/costmap
-    visualize: false
+    visualize: True
     planner_frequency: 0.2
     progress_timeout: 30
     potential_scale: 5.0
