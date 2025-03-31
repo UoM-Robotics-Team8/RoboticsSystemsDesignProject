@@ -23,14 +23,14 @@ The goal of the project is to design a robot that is capable of fully autononmou
 
 Clone this repository into your workspace:
 ```
-https://github.com/UoM-Robotics-Team8/RoboticsSystemsDesignProject.git
+git clone https://github.com/alyhatem/RoboticsSystemsDesignProject.git
 ```
 
 Then clone dependency packages inside the /src folder of the cloned repository:
 ```
 git clone https://github.com/robo-friends/m-explore-ros2.git
 git clone -b ros2 https://github.com/Slamtec/rplidar_ros.git
-git clone https://github.com/cra-ros-pkg/robot_localization.git
+git clone -b humble-devel https://github.com/cra-ros-pkg/robot_localization.git
 ```
 
 Next install dependencies using APT:

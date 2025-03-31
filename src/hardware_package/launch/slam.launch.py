@@ -38,7 +38,7 @@ def generate_launch_description():
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
         name='slam_toolbox',
-        #remappings=[('/scan', '/scan_filtered')],
+        remappings=[('/scan', '/scan_filtered')],
         parameters=[{
             'transform_timeout' : 1.0,
             'max_laser_queue_size' : 100,
