@@ -10,7 +10,7 @@ bt_navigator:
     # nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml
     # nav2_bt_navigator/navigate_through_poses_w_replanning_and_recovery.xml
     # They can be set here or via a RewrittenYaml remap from a parent launch file to Nav2.
-    default_bt_xml_filename: "nav2_bt_navigator/nav_to_pose_with_consistent_replanning_and_if_path_becomes_invalid.xml"
+    #default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
 
 
 behavior_server:
@@ -29,7 +29,8 @@ behavior_server:
       plugin: "nav2_behaviors/Wait"
     assisted_teleop:
       plugin: "nav2_behaviors/AssistedTeleop"
-    global_frame: odom
+    global_frame: map
+    odom_topic: /odom
     robot_base_frame: base_link
     transform_tolerance: 0.1
     use_sim_time: true
