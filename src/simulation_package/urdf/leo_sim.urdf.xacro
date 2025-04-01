@@ -179,28 +179,28 @@
     <joint name="base_FR_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_FR_link"/>
-        <origin xyz="${wheelbase/2} -${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <origin xyz="${wheelbase/2} -${wheel_separation/2} -0.1" rpy="1.5707 0 0" />
         <axis xyz="0 0 1" />
     </joint>
     
     <joint name="base_FL_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_FL_link"/>
-        <origin xyz="${wheelbase/2} ${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <origin xyz="${wheelbase/2} ${wheel_separation/2} -0.1" rpy="1.5707 0 0" />
         <axis xyz="0 0 1" />
     </joint>
     
     <joint name="base_RR_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_RR_link"/>
-        <origin xyz="-${wheelbase/2} -${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <origin xyz="-${wheelbase/2} -${wheel_separation/2} -0.1" rpy="1.5707 0 0" />
         <axis xyz="0 0 1" />
     </joint>
     
     <joint name="base_RL_joint" type="continuous">
         <parent link="base_link"/>
         <child link="wheel_RL_link"/>
-        <origin xyz="-${wheelbase/2} ${wheel_separation/2} -0.1" rpy="-1.5707 0 0" />
+        <origin xyz="-${wheelbase/2} ${wheel_separation/2} -0.1" rpy="1.5707 0 0" />
         <axis xyz="0 0 1" />
     </joint>
     
@@ -252,8 +252,8 @@
     <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
       <!-- Wheel Joints -->
       <left_joint>base_FL_joint</left_joint>
-      <right_joint>base_FR_joint</right_joint>
       <left_joint>base_RL_joint</left_joint>
+      <right_joint>base_FR_joint</right_joint>
       <right_joint>base_RR_joint</right_joint>
 
       <!-- Kinematics -->

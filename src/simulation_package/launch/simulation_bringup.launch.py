@@ -98,7 +98,7 @@ def generate_launch_description():
         ],
         parameters=[{'qos_overrides./leo_sim/subscriber/reliability': 'reliable'}],
         remappings=[
-            ('/model/leo_sim/odometry', '/wheel_odom_with_covariance'),
+            ('/model/leo_sim/odometry', '/odom'),
             ('/model/leo_sim/scan', '/scan'),
             ('/model/leo_sim/tf', '/tf'),
             ('/model/leo_sim/imu', '/imu/data_raw'),
