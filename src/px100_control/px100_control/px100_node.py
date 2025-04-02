@@ -33,10 +33,10 @@ class PX100Node(Node):
             qos_profile=1
         )
 
-        self.H_base_cam = np.array([[0, 0, 1,  0.0062],
-                                     [1, 0, 0,   0.0066],
-                                     [0, 1, 0, 0.0006],
-                                     [0, 0, 0,     1]])
+        self.H_base_cam = np.array([[0, 0, 1,  0.062],
+                                    [1, 0, 0, -0.066],
+                                    [0, 1, 0,  0.006],
+                                    [0, 0, 0,      1]])
         self.H_cam_obj = np.zeros(4)
         self.H_base_obj = np.zeros(4)
         self.bot = InterbotixManipulatorXS(
@@ -58,16 +58,16 @@ class PX100Node(Node):
         x = self.H_base_obj[0, 3]
         y = self.H_base_obj[1, 3]
         z = self.H_base_obj[2, 3]
-        r = np.hypot(x, y) 
+        r = np.hypot(x, y) + 0.015
         theta = np.arctan2(y, x)
         x_traj = r - 0.2458
         z_traj = z - 0.193
 
         self.bot.arm.go_to_home_pose()
-        self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
+        # self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
         self.bot.gripper.release()
-        # self.bot.arm.set_ee_pose_components(x=r, z=z, pitch=0.0, blocking=True)
-        self.bot.arm.set_ee_cartesian_trajectory(x=x_traj, z=z_traj)
+        self.bot.arm.set_ee_pose_components(x=r, z=z, pitch=0.0, blocking=True)
+        # self.bot.arm.set_ee_cartesian_trajectory(x=x_traj, z=z_traj)
         self.bot.gripper.grasp()
         self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
         self.bot.arm.go_to_sleep_pose()
