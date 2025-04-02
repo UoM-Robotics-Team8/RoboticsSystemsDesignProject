@@ -33,9 +33,9 @@ class PX100Node(Node):
             qos_profile=1
         )
 
-        self.H_base_cam = np.array([[0, 0, 1,  0.06],
-                                     [1, 0, 0,   0.0],
-                                     [0, 1, 0, 0.015],
+        self.H_base_cam = np.array([[0, 0, 1,  0.0062],
+                                     [1, 0, 0,   0.0066],
+                                     [0, 1, 0, 0.0006],
                                      [0, 0, 0,     1]])
         self.H_cam_obj = np.zeros(4)
         self.H_base_obj = np.zeros(4)
