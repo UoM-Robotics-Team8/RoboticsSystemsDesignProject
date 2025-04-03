@@ -7,6 +7,7 @@ import numpy as np
 from numpy import pi
 from interbotix_common_modules.common_robot.robot import robot_shutdown, robot_startup
 from interbotix_xs_modules.xs_robot.arm import InterbotixManipulatorXS
+import time
 
 class PX100Node(Node):
     """A ROS2 Node that represents the manipulator."""
@@ -64,19 +65,23 @@ class PX100Node(Node):
 
         self.H_base_obj = self.H_base_cam @ self.H_cam_obj
 
-        x = self.H_base_obj[0, 3]
+        x = self.H_base_obj[0, 3] + 0.0075
         y = self.H_base_obj[1, 3]
         z = self.H_base_obj[2, 3]
+
+        if y > 0:
+            y += 0.009
         # r = np.hypot(x, y) + 0.015
-        # theta = np.arctan2(y, x)
+        theta = np.arctan2(y, x)
         # x_traj = r - 0.2458
         # z_traj = z - 0.193
 
         self.bot.arm.go_to_home_pose()
-        # self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
         self.bot.gripper.release()
-        self.bot.arm.set_ee_pose_components(x=x, y=y, pitch=0.0, blocking=True)
-        self.bot.arm.set_ee_pose_components(x=x, y=y, z=z, pitch=0.0, blocking=True)
+        self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
+        # self.bot.arm.set_ee_pose_components(x=x, y=y, z=0.1983, pitch=0.0, blocking=True)
+        # time.sleep(2)
+        self.bot.arm.set_ee_pose_components(x=x, y=y, z=z, pitch=pi/6, blocking=True)
         self.bot.gripper.grasp()
         self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
         self.bot.arm.go_to_sleep_pose()
