@@ -156,7 +156,7 @@ local_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-       	depth_scan:
+      depth_scan:
           topic: /depth/scan
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10
@@ -226,7 +226,7 @@ global_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-       	depth_scan:
+      depth_scan:
           topic: /depth/scan
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10

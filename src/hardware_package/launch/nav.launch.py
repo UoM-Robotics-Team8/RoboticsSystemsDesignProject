@@ -40,6 +40,8 @@ def generate_launch_description():
     config_planner = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
     config_controller = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
 
+    map_yaml = PathJoinSubstitution([pkg_name, 'config', 'map.yaml'])
+
     # # Behaviour Tree Navigator
 
     # node_bt_nav = Node(
@@ -96,7 +98,9 @@ def generate_launch_description():
     launch_nav = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([get_package_share_directory('nav2_bringup'), '/launch',
                                                     '/bringup_launch.py']),
-        launch_arguments={'params_file': config_bt_nav}.items(),
+        launch_arguments={
+            'params_file': config_bt_nav,
+            'map': map_yaml}.items(),
     )
 
     # robot state publisher node

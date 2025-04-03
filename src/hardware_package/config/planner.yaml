@@ -44,7 +44,7 @@ global_costmap:
         scan_source:
           topic: /scan_filtered
           max_obstacle_height: 2.0
-          clearing: True
+          clearing: True #allows clearing of costmap if there is new data
           marking: True
           data_type: "LaserScan"
           raytrace_max_range: 3.0
