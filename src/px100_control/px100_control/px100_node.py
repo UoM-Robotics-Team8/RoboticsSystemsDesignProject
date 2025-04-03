@@ -33,10 +33,14 @@ class PX100Node(Node):
             qos_profile=1
         )
 
-        self.H_base_cam = np.array([[ 0, 0, 1,  0.062],
-                                    [-1, 0, 0, -0.066],  ### This is the value when camera is in position 1
-                                    [ 0, 1, 0,  0.006],
+        self.H_base_cam = np.array([[ 0, 0, 1,  0.087],
+                                    [-1, 0, 0,  0.016],  ### This is the value when camera is in position 1
+                                    [ 0, 1, 0,  0.043],
                                     [ 0, 0, 0,      1]])
+        # self.H_base_cam = np.array([[ 0, 0, 1,  0.062],
+        #                             [-1, 0, 0, -0.066],  ### This is the value when camera is in position 1
+        #                             [ 0, 1, 0,  0.006],
+        #                             [ 0, 0, 0,      1]])
         
         # self.H_base_cam = np.array([[ 0, 0, 1,  0.066], ### This is the values when camera is offset (position 2)
         #                             [-1, 0, 0, -0.013],  
@@ -60,7 +64,7 @@ class PX100Node(Node):
 
         self.H_base_obj = self.H_base_cam @ self.H_cam_obj
 
-        x = self.H_base_obj[0, 3] + 0.0075
+        x = self.H_base_obj[0, 3]
         y = self.H_base_obj[1, 3]
         z = self.H_base_obj[2, 3]
         # r = np.hypot(x, y) + 0.015
@@ -71,6 +75,7 @@ class PX100Node(Node):
         self.bot.arm.go_to_home_pose()
         # self.bot.arm.set_single_joint_position(joint_name='waist', position=theta)
         self.bot.gripper.release()
+        self.bot.arm.set_ee_pose_components(x=x, y=y, pitch=0.0, blocking=True)
         self.bot.arm.set_ee_pose_components(x=x, y=y, z=z, pitch=0.0, blocking=True)
         self.bot.gripper.grasp()
         self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
