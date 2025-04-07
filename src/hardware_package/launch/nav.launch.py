@@ -22,14 +22,14 @@ def generate_launch_description():
 
     # Declare package directory
     # Necessary fixes
-    remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
+    # remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
     
-    lifecycle_nodes = [
-        'planner_server',
-        'behaviour_server',
-        'bt_navigator',
-        'controller_server'
-    ]
+    # lifecycle_nodes = [
+    #     'planner_server',
+    #     'behaviour_server',
+    #     'bt_navigator',
+    #     'controller_server'
+    # ]
 
     # Define nav_to_pose behaviour tree
 
@@ -37,8 +37,6 @@ def generate_launch_description():
 
     # LOAD PARAMETERS FROM YAML FILES
     config_bt_nav = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
-    config_planner = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
-    config_controller = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
 
     map_yaml = PathJoinSubstitution([pkg_name, 'config', 'map.yaml'])
 

@@ -36,7 +36,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: scan_filtered
+    scan_topic: scan
 
 bt_navigator:
   ros__parameters:
@@ -219,7 +219,7 @@ global_costmap:
         enabled: True
         observation_sources: scan depth_scan
         scan:
-          topic: /scan_filtered
+          topic: /scan
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10
           max_obstacle_height: 2.0
@@ -439,7 +439,7 @@ slam_toolbox:
     odom_frame: odom
     map_frame: map
     base_frame: base_footprint
-    scan_topic: /scan_filtered
+    scan_topic: /scan
     use_map_saver: true
     mode: mapping #localization
 
