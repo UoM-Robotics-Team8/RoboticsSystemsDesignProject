@@ -63,7 +63,8 @@ setup(
 
         'console_scripts': [
             'lidar_node = hardware_package.lidar_node:main',
-            'periodic_map_saver = hardware_package.periodic_map_saver:main'
+            'periodic_map_saver = hardware_package.periodic_map_saver:main',
+            'object_detection_listener = hardware_package.object_detection_listener:main',
         ],
 
     },
