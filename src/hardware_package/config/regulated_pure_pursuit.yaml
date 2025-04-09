@@ -147,7 +147,7 @@ local_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan depth_scan
+        observation_sources: scan
         scan:
           topic: /scan
           raytrace_min_range: 0.10
@@ -156,17 +156,17 @@ local_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-      depth_scan:
-          topic: /depth/scan
-          raytrace_min_range: 0.10
-          obstacle_min_range: 0.10
-          max_obstacle_height: 2.0
-          clearing: True
-          marking: True
+      # depth_scan:
+      #     topic: /depth/scan
+      #     raytrace_min_range: 0.10
+      #     obstacle_min_range: 0.10
+      #     max_obstacle_height: 2.0
+      #     clearing: True
+      #     marking: True
           data_type: "LaserScan"
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
-        enabled: False
+        enabled: True
         publish_voxel_map: False
         origin_z: 0.0
         z_resolution: 0.2
@@ -174,9 +174,9 @@ local_costmap:
         min_obstacle_height: 0.0
         max_obstacle_height: 2.0
         mark_threshold: 0
-        observation_sources: realsense1
-        realsense1:
-          topic: /camera/d435i_camera/depth/color/points
+        observation_sources: camera
+        camera:
+          topic: /camera/camera/depth/color/points
           raytrace_min_range: 0.05
           raytrace_max_range: 1.25
           obstacle_min_range: 0.05
@@ -217,26 +217,26 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan depth_scan
+        observation_sources: scan
         scan:
-          topic: /scan_filtered
+          topic: /scan
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
-      depth_scan:
-          topic: /depth/scan
-          raytrace_min_range: 0.10
-          obstacle_min_range: 0.10
-          max_obstacle_height: 2.0
-          clearing: True
-          marking: True
-          data_type: "LaserScan"
+      # depth_scan:
+      #     topic: /depth/scan
+      #     raytrace_min_range: 0.10
+      #     obstacle_min_range: 0.10
+      #     max_obstacle_height: 2.0
+      #     clearing: True
+      #     marking: True
+      #     data_type: "LaserScan"
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
-        enabled: False
+        enabled: True
         publish_voxel_map: False
         origin_z: 0.0
         z_resolution: 0.2
@@ -244,9 +244,9 @@ global_costmap:
         min_obstacle_height: 0.0
         max_obstacle_height: 2.0
         mark_threshold: 0
-        observation_sources: realsense1
-        realsense1:
-          topic: /camera/d435i_camera/depth/color/points
+        observation_sources: camera
+        camera:
+          topic: /camera/camera/depth/color/points
           raytrace_min_range: 0.05
           raytrace_max_range: 1.25
           obstacle_min_range: 0.05
