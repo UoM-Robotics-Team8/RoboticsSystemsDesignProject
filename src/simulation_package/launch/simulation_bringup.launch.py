@@ -95,6 +95,8 @@ def generate_launch_description():
             "/model/leo_sim/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
             "/model/leo_sim/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
             "/model/leo_sim/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
+            "/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image/points" + "@sensor_msgs/msg/PointCloud2" + "[" + "ignition.msgs.PointCloudPacked",
+            "/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image" + "@sensor_msgs/msg/Image" "[" + "ignition.msgs.Image"
         ],
         parameters=[{'qos_overrides./leo_sim/subscriber/reliability': 'reliable'}],
         remappings=[
@@ -105,6 +107,8 @@ def generate_launch_description():
             ('/model/leo_sim/cmd_vel', '/cmd_vel'),
             ('/model/leo_sim/camera/image_raw', '/camera'),
             ('/model/leo_sim/joint_state', '/joint_states'),
+            ('/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image/points', '/camera/camera/depth/color/points'),
+            ('/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image', '/camera/camera/depth_image')
         ],
         output="screen",
     )

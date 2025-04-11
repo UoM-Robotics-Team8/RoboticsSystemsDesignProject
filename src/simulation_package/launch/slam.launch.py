@@ -36,11 +36,11 @@ def generate_launch_description():
         arguments=['-d', [rviz_config_file]]
     )
 
-    map_saver_node = Node(
-        package='simulation_package',
-        executable='periodic_map_saver',
-        name='periodic_map_saver',
-    )
+    # map_saver_node = Node(
+    #     package='simulation_package',
+    #     executable='periodic_map_saver',
+    #     name='periodic_map_saver',
+    # )
 
     # Add actions to LaunchDescription
     # Simulation
@@ -51,6 +51,6 @@ def generate_launch_description():
     # Visualisation
     ld.add_action(node_rviz)
 
-    ld.add_action(map_saver_node)
+    #ld.add_action(map_saver_node)
 
     return ld
