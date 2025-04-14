@@ -95,8 +95,9 @@ def generate_launch_description():
             "/model/leo_sim/cmd_vel" + "@geometry_msgs/msg/Twist" + "@" + "ignition.msgs.Twist",
             #"/model/leo_sim/camera/image_raw" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
             "/model/leo_sim/joint_state" + "@sensor_msgs/msg/JointState" + "[" + "ignition.msgs.Model",
-            "/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image/points" + "@sensor_msgs/msg/PointCloud2" + "[" + "ignition.msgs.PointCloudPacked",
-            "/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image" + "@sensor_msgs/msg/Image" "[" + "ignition.msgs.Image"
+            "/model/leo_sim/depth_camera/points" + "@sensor_msgs/msg/PointCloud2" + "[" + "ignition.msgs.PointCloudPacked",
+            "/model/leo_sim/depth_camera" + "@sensor_msgs/msg/Image" + "[" + "ignition.msgs.Image",
+            "/model/leo_sim/camera_info" + "@sensor_msgs/msg/CameraInfo" + "@" + 'ignition.msgs.CameraInfo',
         ],
         parameters=[{'qos_overrides./leo_sim/subscriber/reliability': 'reliable'}],
         remappings=[
@@ -107,11 +108,19 @@ def generate_launch_description():
             ('/model/leo_sim/cmd_vel', '/cmd_vel'),
             #('/model/leo_sim/camera/image_raw', '/camera'),
             ('/model/leo_sim/joint_state', '/joint_states'),
-            ('/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image/points', '/camera/camera/depth/color/points'),
-            ('/world/empty/model/leo_sim/link/base_footprint/sensor/camera/depth_image', '/camera/camera/depth_image')
+            ('/model/leo_sim/depth_camera/points', '/camera/camera/depth/color/points'),
+            ('/model/leo_sim/depth_camera', '/camera/camera/depth/camera'),
+            ('/model/leo_sim/camera_info', '/camera/camera/depth/camera_info')
         ],
         output="screen",
     )
+
+    depth_cam_data2cam_link_tf = Node(package='tf2_ros',
+                     executable='static_transform_publisher',
+                     name='cam3Tolink',
+                     output='log',
+                     arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'camera_camera_link', 'leo_sim/base_footprint/depth_sensor'])
+
 
     ld.add_action(SetParameter(name='use_sim_time', value=True))
     ld.add_action(ign_resource_path)
@@ -121,6 +130,7 @@ def generate_launch_description():
     ld.add_action(node_robot_state_publisher)
     ld.add_action(node_spawn_entity)
     ld.add_action(node_ros_gz_bridge)
+    ld.add_action(depth_cam_data2cam_link_tf)
 
     return ld
 
