@@ -28,30 +28,36 @@ def main():
         sys.exit()
         
     ######## TESTING AREA ########
-    x, y, z = 0.2, 0.0, 0.1
-    r = np.hypot(x, y)  # Equivalent to sqrt(x^2 + y^2)
-    theta = np.arctan2(y, x)  # Angle in radians
-    x_traj = r - 0.2458
-    z_traj = z - 0.193
+    # x, y, z = 0.2, 0.0, 0.1
+    # r = np.hypot(x, y)  # Equivalent to sqrt(x^2 + y^2)
+    # theta = np.arctan2(y, x)  # Angle in radians
+    # x_traj = r - 0.2458
+    # z_traj = z - 0.193
 
     # bot.gripper.release(2.0)
     # bot.gripper.grasp(2.0)
 
-    ### Best Practices ###
-
+    ### Testing ###
     bot.arm.go_to_home_pose()
-    bot.arm.set_single_joint_position(joint_name='waist', position=theta)
-    bot.gripper.release(1.0)
-    bot.arm.set_ee_cartesian_trajectory(x=x_traj, z=z_traj)
-    bot.gripper.grasp(1.0)
-    bot.arm.set_ee_cartesian_trajectory(x=-x_traj, z=-z_traj)
-    bot.arm.set_single_joint_position(joint_name='waist', position=pi/2)
-    bot.arm.set_single_joint_position(joint_name="wrist_angle", position=pi/2)
-    bot.arm.set_ee_cartesian_trajectory(z=-0.07)
-    bot.gripper.release(1.0)
-    bot.arm.set_ee_cartesian_trajectory(z=0.07)
+    bot.arm.set_joint_positions([0.0, pi/4, -pi/4, 0.0])
     bot.arm.go_to_home_pose()
     bot.arm.go_to_sleep_pose()
+
+    ### Best Practices ###
+
+    # bot.arm.go_to_home_pose()
+    # bot.arm.set_single_joint_position(joint_name='waist', position=theta)
+    # bot.gripper.release(1.0)
+    # bot.arm.set_ee_cartesian_trajectory(x=x_traj, z=z_traj)
+    # bot.gripper.grasp(1.0)
+    # bot.arm.set_ee_cartesian_trajectory(x=-x_traj, z=-z_traj)
+    # bot.arm.set_single_joint_position(joint_name='waist', position=pi/2)
+    # bot.arm.set_single_joint_position(joint_name="wrist_angle", position=pi/2)
+    # bot.arm.set_ee_cartesian_trajectory(z=-0.07)
+    # bot.gripper.release(1.0)
+    # bot.arm.set_ee_cartesian_trajectory(z=0.07)
+    # bot.arm.go_to_home_pose()
+    # bot.arm.go_to_sleep_pose()
 
     #######################
     # bot.arm.set_single_joint_position(joint_name='wrist_angle', position=0.0)

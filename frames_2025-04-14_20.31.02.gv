@@ -1,0 +1,18 @@
+digraph G {
+"odom" -> "base_footprint"[label=" Broadcaster: default_authority\nAverage rate: 1000.806\nBuffer length: 1.24\nMost recent transform: 49.632\nOldest transform: 48.392\n"];
+"map" -> "odom"[label=" Broadcaster: default_authority\nAverage rate: 15.949\nBuffer length: 1.254\nMost recent transform: 49.766\nOldest transform: 48.512\n"];
+"camera_camera_frame_link" -> "leo_sim/base_footprint/depth_sensor"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"camera_camera_link" -> "camera_camera_frame_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_footprint" -> "base_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "camera_camera_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "lidar_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "sled_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "wheel_FL_link"[label=" Broadcaster: default_authority\nAverage rate: 20.101\nBuffer length: 1.194\nMost recent transform: 49.62\nOldest transform: 48.426\n"];
+"base_link" -> "wheel_FR_link"[label=" Broadcaster: default_authority\nAverage rate: 20.101\nBuffer length: 1.194\nMost recent transform: 49.62\nOldest transform: 48.426\n"];
+"base_link" -> "wheel_RL_link"[label=" Broadcaster: default_authority\nAverage rate: 20.101\nBuffer length: 1.194\nMost recent transform: 49.62\nOldest transform: 48.426\n"];
+"base_link" -> "wheel_RR_link"[label=" Broadcaster: default_authority\nAverage rate: 20.101\nBuffer length: 1.194\nMost recent transform: 49.62\nOldest transform: 48.426\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1744659062.0287197"[ shape=plaintext ] ;
+}->"map";
+}

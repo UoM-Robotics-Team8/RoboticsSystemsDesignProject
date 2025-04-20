@@ -1,0 +1,3 @@
+ros2 launch realsense2_camera rs_launch.py depth_module.profile:=1280x720x30 pointcloud.enable:=true
+
+ ros2 run object_detect_package image_subscriber

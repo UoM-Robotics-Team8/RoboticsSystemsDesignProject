@@ -1,0 +1,7 @@
+image: maze.pgm  # or .png
+resolution: 0.05  # Each pixel represents 5 cm
+origin: [-10.0, -10.0, 0.0]  # Bottom-left corner (x, y, theta)
+negate: 0  # 0 = white is free, 1 = black is free
+occupied_thresh: 0.65  # Pixels darker than this are occupied
+free_thresh: 0.25  # Pixels lighter than this are free
+mode: trinary  # Optional, ensures values are 0, 100, or 255

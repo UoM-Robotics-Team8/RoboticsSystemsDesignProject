@@ -35,8 +35,8 @@ git clone -b humble-devel https://github.com/cra-ros-pkg/robot_localization.git
 
 Next install dependencies using APT:
 ```
-apt-get install ros-humble-slam-toolbox
-apt-get install ros-humble-navigation2
+sudo apt install ros-humble-slam-toolbox
+sudo apt install ros-humble-nav2-bringup
 ```
 
 ## Running the package

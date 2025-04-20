@@ -2,17 +2,20 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro"
        name="leo">
 
-  <xacro:arg name="mecanum_wheels" default="false"/>
-  
-  <xacro:include filename="./macros.xacro"/>
+   <xacro:arg name="mecanum_wheels" default="false"/>
+   
+   <xacro:include filename="./macros.xacro"/>
+   <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
 
-  <xacro:leo mecanum_wheels="$(arg mecanum_wheels)"/>
-
+   <xacro:leo mecanum_wheels="$(arg mecanum_wheels)"/>
+   <xacro:sensor_d435i parent="base_link" name="_camera">
+      <origin xyz="0.155 0 0.2" rpy="0 0 0"/>
+   </xacro:sensor_d435i>
 
   <link name="lidar_link">
      <visual>
           <geometry>
-             <mesh filename="../meshes/Generic_100mm_lidar.stl" scale="1 1 1"/> 
+             <mesh filename="package://leo_description/models/Generic_100mm_lidar.stl" scale="1 1 1"/> 
           </geometry>
           <material name="red">
                <color rgba="1 0 0 1" />
@@ -25,7 +28,7 @@
    <visual>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <geometry>
-         <mesh filename="../meshes/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
+         <mesh filename="package://leo_description/models/Rover_mounts_v1.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <material name="blue">
          <color rgba="0 0 1 1.0"/>
@@ -33,17 +36,17 @@
    </visual>
   </link>
 
-  <link name="depth_camera_link">
+  <!-- <link name="depth_camera_link">
    <visual name="">
       <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
       <geometry>
-         <box size="0.090 0.025 0.025"/>
+         <box size="0.025 0.090 0.025"/>
       </geometry>
       <material name="cyan">
          <color rgba="0 1 1 1.0"/>
       </material>
    </visual>
-  </link>
+  </link> -->
 
   <joint name="lidar_base_joint" type="fixed">
      <parent link="base_link"/>
@@ -60,11 +63,14 @@
    
   </joint>
 
-  <joint name="depth_camera_base_joint" type="fixed">
+  <!-- <joint name="depth_camera_base_joint" type="fixed">
       <parent link="base_link"/>
       <child link="depth_camera_link"/>
 
-      <origin xyz="0.155 0 0" rpy="-1.57 0 -1.57" />
+      <origin xyz="0.155 0 0.2" rpy="-3.14 0 -3.14" />
       
-  </joint>
+  </joint> -->
+
+  
+
 </robot>

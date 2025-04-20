@@ -13,38 +13,42 @@ def generate_launch_description():
 
     # Parameters, Nodes and Launch files go here
      # Specify the name of the package and path to xacro file in external package
-    pkg_name = 'hardware_package'
+    pkg_name = get_package_share_directory('hardware_package')
     file_subpath = 'urdf/leo.urdf.xacro'
 
     # Use xacro to process the file
-    xacro_file = os.path.join(get_package_share_directory(pkg_name),file_subpath)
+    xacro_file = os.path.join(pkg_name,file_subpath)
     robot_description_raw = xacro.process_file(xacro_file).toxml()
 
     # Declare package directory
-    pkg_nav_demos = get_package_share_directory('hardware_package')
     # Necessary fixes
-    remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
+    # remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
     
     # lifecycle_nodes = [
-    #     'controller_server',
     #     'planner_server',
     #     'behaviour_server',
     #     'bt_navigator',
+    #     'controller_server'
     # ]
 
+    # Define nav_to_pose behaviour tree
+
+    bt_xml_navtopose_file = PathJoinSubstitution([pkg_name, 'behaviour', 'navigate_through_poses_w_replanning_and_recovery.xml'])
 
     # LOAD PARAMETERS FROM YAML FILES
-    config_bt_nav     = PathJoinSubstitution([pkg_nav_demos, 'config', 'bt_nav.yaml'])
-    config_planner    = PathJoinSubstitution([pkg_nav_demos, 'config', 'planner.yaml'])
-    config_controller = PathJoinSubstitution([pkg_nav_demos, 'config', 'controller.yaml'])
+    config_bt_nav = PathJoinSubstitution([pkg_name, 'config', 'regulated_pure_pursuit.yaml'])
+
+    map_yaml = PathJoinSubstitution([pkg_name, 'config', 'map.yaml'])
 
     # # Behaviour Tree Navigator
+
     # node_bt_nav = Node(
+
     #     package='nav2_bt_navigator',
     #     executable='bt_navigator',
     #     name='bt_navigator',
     #     output='screen',
-    #     parameters=[config_bt_nav],
+    #     parameters=[config_bt_nav,{'default_nav_to_pose_bt_xml' : bt_xml_navtopose_file}],
     #     remappings=remappings,
     # )
 
@@ -57,17 +61,16 @@ def generate_launch_description():
     #     parameters=[config_bt_nav],
     #     remappings=remappings,
     # )
-    
-    # # Planner Server Node
+
     # node_planner = Node(
     #     package='nav2_planner',
     #     executable='planner_server',
     #     name='planner_server',
     #     output='screen',
     #     parameters=[config_planner],
-    #     remappings=remappings,
+    #     remappings=remappings
     # )
-    
+
     # # Controller Server Node
     # node_controller = Node(
     #     package='nav2_controller',
@@ -79,6 +82,7 @@ def generate_launch_description():
     # )
 
     # # Lifecycle Node Manager to automatically start lifecycles nodes (from list)
+
     # node_lifecycle_manager = Node(
     #     package='nav2_lifecycle_manager',
     #     executable='lifecycle_manager',
@@ -86,17 +90,15 @@ def generate_launch_description():
     #     output='screen',
     #     parameters=[{'autostart': True}, {'node_names': lifecycle_nodes}],
     # )
-    
-    nav_node = Node(
-        package='nav2_bringup',
-        executable='bringup_launch',
-        name='nav2_bringup',
-        output='screen',
-        parameters=[
-            config_bt_nav,
-            config_controller,
-            config_planner
-        ]
+
+    #nav2_bringup_node = PythonLaunchDescriptionSource(get_package_share_directory('nav2_bringup'), '/launch', '/bringup_launch.py')
+
+    launch_nav = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([get_package_share_directory('nav2_bringup'), '/launch',
+                                                    '/bringup_launch.py']),
+        launch_arguments={
+            'params_file': config_bt_nav,
+            'map': map_yaml}.items(),
     )
 
     # robot state publisher node
@@ -113,7 +115,7 @@ def generate_launch_description():
     # ld.add_action(node_planner)
     # ld.add_action(node_controller)
     # ld.add_action(node_lifecycle_manager)
-    ld.add_action(nav_node)
+    ld.add_action(launch_nav)
     ld.add_action(node_robot_state_publisher)
     
     return ld

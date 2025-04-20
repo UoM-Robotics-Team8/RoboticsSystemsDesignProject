@@ -1,6 +1,6 @@
 bt_navigator:
   ros__parameters:
-    use_sim_time: false
+    use_sim_time: False
     global_frame: map
     robot_base_frame: base_link
     odom_topic: odom
@@ -10,7 +10,7 @@ bt_navigator:
     # nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml
     # nav2_bt_navigator/navigate_through_poses_w_replanning_and_recovery.xml
     # They can be set here or via a RewrittenYaml remap from a parent launch file to Nav2.
-    default_bt_xml_filename: "nav2_bt_navigator/nav_to_pose_with_consistent_replanning_and_if_path_becomes_invalid.xml"
+    #default_bt_xml_filename: "navigate_w_replanning_and_recovery.xml"
 
 
 behavior_server:
@@ -33,8 +33,8 @@ behavior_server:
     odom_topic: /odom
     robot_base_frame: base_link
     transform_tolerance: 0.1
-    use_sim_time: false
+    use_sim_time: False
     simulate_ahead_time: 2.0
-    max_rotational_vel: 1.0
-    min_rotational_vel: 0.4
+    max_rotational_vel: 0.5
+    min_rotational_vel: 0.1
     rotational_acc_lim: 3.2
