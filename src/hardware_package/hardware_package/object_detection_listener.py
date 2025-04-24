@@ -57,18 +57,22 @@ class ObjectDetectListener(Node):
       self.pause_publshier.publish(msg)
    
    def nav_to_object(self):
-      goal = NavigateToPose()
+      goal = NavigateToPose.Goal()
+      
+      # expects this message type
+      goal.pose = PoseStamped()
 
       # set the goal pose frame
-      goal.header.frame_id = "map"
+      goal.pose.header.frame_id = "map"
 
       # time is needed in the header
-      goal.header.stamp = self.get_clock().now().to_msg()
+      goal.pose.header.stamp = self.get_clock().now().to_msg()
 
-      # set the goal position
-      goal.pose.position.x = self.object_x
-      goal.pose.position.y = self.object_y
-      goal.pose.position.z = 0 # 2D
+      # set the goal position (quaternion)
+      goal.pose.pose.position.x = self.object_x
+      goal.pose.pose.position.y = self.object_y
+      goal.pose.pose.position.z = 0 # 2D
+      goal.pose.pose.orientation.w = 1.0 # facing forward
 
       self.send_goal(goal)
 
