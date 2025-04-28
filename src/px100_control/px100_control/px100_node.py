@@ -1,7 +1,8 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Float32MultiArray, Bool
+from sensor_msgs.msg import JointState
 from std_srvs.srv import Trigger
 import numpy as np
 from numpy import pi
@@ -33,6 +34,21 @@ class PX100Node(Node):
             callback=self.pose_callback,
             qos_profile=1
         )
+        self.states_subscriber = self.create_subscription(
+            msg_type=JointState,
+            topic="/px100/joint_states",
+            callback=self.states_callback,
+            qos_profile=1
+        )
+
+        self.grasped_publisher = self.create_publisher(
+            msg_type=Bool,
+            topic="/px100/grasping_result",
+            qos_profile=1
+        )
+
+        timer_period: float = 0.5
+        self.timer = self.create_timer(timer_period, self.timer_callback)
 
         self.H_base_cam = np.array([[ 0, 0, 1,  0.087],
                                     [-1, 0, 0,  0.016],  ### This is the value when camera is in position 1
@@ -47,6 +63,7 @@ class PX100Node(Node):
         #                             [-1, 0, 0, -0.013],  
         #                             [ 0, 1, 0,   0.07],
         #                             [ 0, 0, 0,      1]])
+        self.finger_pos = 0.0
         self.H_cam_obj = np.zeros(4)
         self.H_base_obj = np.zeros(4)
         self.bot = InterbotixManipulatorXS(
@@ -86,12 +103,10 @@ class PX100Node(Node):
         self.bot.arm.go_to_home_pose(moving_time=1.5, blocking=True)
         self.bot.arm.go_to_sleep_pose()
 
-
-        # Display INFO
+        # Assign to response
         response.success = True
-        response.message = "Robot has picked object"
-        self.get_logger().info(response.message)
-
+        response.message = "Robot has attempted to pick object"
+        
         return response
 
     def drop_callback(self,
@@ -113,6 +128,27 @@ class PX100Node(Node):
         self.get_logger().info(response.message)
 
         return response
+
+    def timer_callback(self):
+        """Method that is periodically called by the timer."""
+
+        msg = Bool()
+
+        if self.finger_pos >= 0.014 and self.finger_pos <= 0.036:
+        ### 0.03757 released ###
+        ### 0.01390 grasped ###
+            # Display INFO
+            msg.data = True
+            self.get_logger().info("Gripper is full")
+        elif self.finger_pos > 0.036 or self.finger_pos < 0.014:
+            # Display INFO
+            msg.data = False
+            self.get_logger().info("Gripper is empty")
+
+
+    def states_callback(self, msg: JointState):
+        """Method called when msg is received by node"""
+        self.finger_pos = msg.position[5]
 
     def pose_callback(self, msg: Point):
         """Method called when msg is received by node"""
