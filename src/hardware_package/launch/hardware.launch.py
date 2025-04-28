@@ -4,6 +4,7 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch_ros.actions import Node, SetParameter
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+import time
 
 def generate_launch_description():
     ld = LaunchDescription()
@@ -25,28 +26,35 @@ def generate_launch_description():
                                                     '/nav.launch.py'])
     )
 
-    # launch_explore = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource([get_package_share_directory('explore_lite'), '/launch', 
-    #                                                 '/explore.launch.py']),
-    #     launch_arguments={}.items(),
-    # )
-
-    launch_depth_camera = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory(pkg_name), 'launch'),
-                                                    '/depth_camera.launch.py'])
+    launch_explore = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([get_package_share_directory('explore_lite'), '/launch', 
+                                                    '/explore.launch.py']),
+        launch_arguments={
+            "return_to_init": True
+        }.items(),
     )
 
-    launch_efk = IncludeLaunchDescription(
+    launch_ekf = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(get_package_share_directory(pkg_name), 'launch'),
                                                     '/ekf.launch.py'])
     )
 
-    ld.add_action(launch_efk)
+    launch_listener = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([os.path.join(get_package_share_directory(pkg_name), 'launch'),
+                                                    '/launch_listener.launch.py'])
+    )
+
+    ld.add_action(launch_ekf)
+    time.sleep(5)
     ld.add_action(launch_lidar)
+    time.sleep(5)
     ld.add_action(launch_slam)
+    time.sleep(5)
     ld.add_action(launch_nav)
-    #ld.add_action(launch_explore)
-    #ld.add_action(launch_depth_camera)
+    time.sleep(5)
+    ld.add_action(launch_explore)
+    time.sleep(5)
+    ld.add_action(launch_listener)
 
 
     return ld

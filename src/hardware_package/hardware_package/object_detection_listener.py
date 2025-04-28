@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.task import Future
 from std_msgs.msg import String, Float32MultiArray, Bool
 from nav2_msgs.action import NavigateToPose
 from rclpy.action import ActionClient
@@ -13,7 +14,8 @@ class ObjectDetectListener(Node):
    def __init__(self):
       super().__init__("object_detect_listener_node")
 
-      self.object_detected: bool = False
+      self.objects_detected: int = 0
+      self.no_of_objects: int = 0
       self.dist_msg: Float32MultiArray = None
       self.object_x: float = None
       self.object_y: float = None
@@ -25,7 +27,14 @@ class ObjectDetectListener(Node):
          qos_profile=10
       )
 
-      self.pause_publshier = self.create_publisher(
+      # self.object_grabbed_subscriber = self.create_subscription(
+      #    msg_type=Bool,
+      #    topic='/object_grabbed',
+      #    callback=self.object_grabbed_callback,
+      #    qos_profile=1
+      # )
+
+      self.explore_publisher = self.create_publisher(
          msg_type=Bool,
          topic='/explore/resume',
          qos_profile=1
@@ -33,28 +42,47 @@ class ObjectDetectListener(Node):
 
       self.nav2_client = ActionClient(self, NavigateToPose, '/navigate_to_pose')
 
+      self.future: Future = None
+
    def object_callback(self, msg):
       self.dist_msg = msg
 
       self.distance_to_object()
 
+   # def object_grabbed_callback(self, msg):
+   #    if msg.data == True:
+   #       self.no_of_objects += 1
+   #       if self.no_of_objects == 3:
+   #          self.go_home()
+   #       else:
+   #          self.resume_explore()
+
+
    def distance_to_object(self):
       if self.dist_msg is None:
          self.get_logger().info("Waiting for data on /object_center_distance...")
       else:
+         if self.objects_detected == 30:
 
-         # pause explore, set goal pose, nav to goal pose
-         self.pause_explore()
-         
-         self.object_x = self.dist_msg[0]
-         self.object_y = self.dist_msg[1]
+            # pause explore, set goal pose, nav to goal pose
+            self.pause_explore()
+            
+            self.object_x = self.dist_msg[0]
+            self.object_y = self.dist_msg[1]
 
-         self.nav_to_object()
+            self.nav_to_object()
+         else:
+            self.objects_detected += 1
 
    def pause_explore(self):
       msg = Bool()
       msg.data = False
-      self.pause_publshier.publish(msg)
+      self.explore_publisher.publish(msg)
+
+   def resume_explore(self):
+      msg = Bool()
+      msg.data = True
+      self.explore_publisher.publish(msg)
    
    def nav_to_object(self):
       goal = NavigateToPose.Goal()
@@ -81,8 +109,21 @@ class ObjectDetectListener(Node):
       self.nav2_client.wait_for_server()
 
       # send goal to nav2 
-      self.nav2_client.send_goal_async(goal)
-      
+      self.future = self.nav2_client.send_goal_async(goal)
+
+      self.future.add_done_callback(self.navigation_result_callback)
+
+   def navigation_result_callback(self, future: Future):
+      result = future.result()
+
+      if result.status == 3:
+         # navigation successful, so pick up object
+         self.get_logger().info("Navigation Succeeded!!")
+      else:
+         # navigation unsuccesful - bad!
+         self.get_logger().info("ERROR! NAVIGATION FAILED")
+         # resume explore and hope it'll not fail next time
+         self.resume_explore()
 
 def main(args=None):
       try:

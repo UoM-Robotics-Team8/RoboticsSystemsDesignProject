@@ -65,6 +65,7 @@ setup(
             'lidar_node = hardware_package.lidar_node:main',
             'periodic_map_saver = hardware_package.periodic_map_saver:main',
             'object_detection_listener = hardware_package.object_detection_listener:main',
+            'pointcloud_to_laserscan = hardware_package.pointcloud_to_laserscan:main',
         ],
 
     },
