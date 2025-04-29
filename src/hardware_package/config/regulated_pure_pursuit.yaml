@@ -104,7 +104,7 @@ controller_server:
       rotate_to_heading_angular_vel: 0.375
       max_angular_accel: 3.2
       simulate_ahead_time: 1.0
-      rotate_to_goal_heading: false
+      rotate_to_goal_heading: true
       rotate_to_heading_once: false
       # Regulated Pure Pursuit
       desired_linear_vel: 0.4
@@ -126,7 +126,7 @@ controller_server:
       regulated_linear_scaling_min_radius: 0.85
       regulated_linear_scaling_min_speed: 0.25
       use_rotate_to_heading: true
-      allow_reversing: false
+      allow_reversing: true
       rotate_to_heading_min_angle: 0.785
       max_angular_accel: 2.5
       max_robot_pose_search_dist: 10.0
@@ -157,7 +157,7 @@ local_costmap:
           marking: True
           data_type: "LaserScan"
         camera:
-          topic: /camera/camera/depth/color/points
+          topic: /depth/scan
           #sensor_frame: camera_camera_link
           raytrace_min_range: 0.05
           raytrace_max_range: 5.00
@@ -167,7 +167,7 @@ local_costmap:
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "PointCloud2"
+          data_type: "LaserScan"
       # depth_scan:
       #     topic: /depth/scan
       #     raytrace_min_range: 0.10
@@ -241,8 +241,8 @@ global_costmap:
           marking: True
           data_type: "LaserScan"
         camera:
-          topic: /camera/camera/depth/color/points
-          sensor_frame: camera_camera_link
+          topic: /depth/scan
+          #sensor_frame: camera_camera_link
           raytrace_min_range: 0.05
           raytrace_max_range: 5.00
           obstacle_min_range: 0.05
@@ -251,7 +251,7 @@ global_costmap:
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "PointCloud2"
+          data_type: "LaserScan"
       # depth_scan:
       #     topic: /depth/scan
       #     raytrace_min_range: 0.10

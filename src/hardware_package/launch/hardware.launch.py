@@ -31,7 +31,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource([get_package_share_directory('explore_lite'), '/launch', 
                                                     '/explore.launch.py']),
         launch_arguments={
-            "return_to_init": True
+            "return_to_init": "true"
         }.items(),
     )
 
@@ -66,7 +66,7 @@ def generate_launch_description():
     point_cloud_to_laser_node = Node(
             package='pointcloud_to_laserscan', executable='pointcloud_to_laserscan_node',
             remappings=[('cloud_in', '/camera/camera/depth/color/points'),
-                        ('scan', 'depth/scan')],
+                        ('scan', '/depth/scan')],
             parameters=[{
                 'target_frame': 'camera_camera_link',
                 'transform_tolerance': 0.01,

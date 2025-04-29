@@ -5,6 +5,7 @@ from std_msgs.msg import String, Float32MultiArray, Bool
 from nav2_msgs.action import NavigateToPose
 from rclpy.action import ActionClient
 from geometry_msgs.msg import PoseStamped
+from math import atan2
 
 
 class ObjectDetectListener(Node):
@@ -61,14 +62,15 @@ class ObjectDetectListener(Node):
    def distance_to_object(self):
       if self.dist_msg is None:
          self.get_logger().info("Waiting for data on /object_center_distance...")
+         return
       else:
-         if self.objects_detected == 30:
+         if self.objects_detected > 30:
 
             # pause explore, set goal pose, nav to goal pose
             self.pause_explore()
             
-            self.object_x = self.dist_msg[0]
-            self.object_y = self.dist_msg[1]
+            self.object_x = self.dist_msg.data[0]
+            self.object_y = self.dist_msg.data[1]
 
             self.nav_to_object()
          else:
@@ -100,25 +102,36 @@ class ObjectDetectListener(Node):
       goal.pose.pose.position.x = self.object_x
       goal.pose.pose.position.y = self.object_y
       goal.pose.pose.position.z = 0 # 2D
-      goal.pose.pose.orientation.w = 1.0 # facing forward
+
+      # set angle so that it is facing the object on arrival
+      angle = atan2(self.object_y, self.object_x)
+      goal.pose.pose.orientation.w = angle
 
       self.send_goal(goal)
 
    def send_goal(self, goal):
       # wait for nav2 to become available
-      self.nav2_client.wait_for_server()
+      if not self.nav2_client.wait_for_server(timeout_sec=10.0):
+         self.get_logger().info("Nav2 action server not available after 10 seconds")
 
-      # send goal to nav2 
+      # send goal to nav2  
       self.future = self.nav2_client.send_goal_async(goal)
 
+      # listens for the outcome of the navigation goal
       self.future.add_done_callback(self.navigation_result_callback)
 
    def navigation_result_callback(self, future: Future):
       result = future.result()
 
+      if result is None:
+         self.get_logger().info("NAVIGATION RESULT NONE!!!")
+         self.resume_explore()
+         return
+
       if result.status == 3:
          # navigation successful, so pick up object
          self.get_logger().info("Navigation Succeeded!!")
+         self.objects_detected = 0
       else:
          # navigation unsuccesful - bad!
          self.get_logger().info("ERROR! NAVIGATION FAILED")
