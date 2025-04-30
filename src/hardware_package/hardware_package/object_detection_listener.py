@@ -60,7 +60,7 @@ class ObjectDetectListener(Node):
 
 
    def distance_to_object(self):
-      if self.dist_msg is None:
+      if self.dist_msg.data[2] == 0.0 and self.dist_msg.data[0] == 0.0:
          self.get_logger().info("Waiting for data on /object_center_distance...")
          return
       else:
@@ -69,8 +69,8 @@ class ObjectDetectListener(Node):
             # pause explore, set goal pose, nav to goal pose
             self.pause_explore()
             
-            self.object_x = self.dist_msg.data[0]
-            self.object_y = self.dist_msg.data[1]
+            self.object_x = self.dist_msg.data[2]
+            self.object_y = self.dist_msg.data[0]
 
             self.nav_to_object()
          else:
@@ -93,7 +93,7 @@ class ObjectDetectListener(Node):
       goal.pose = PoseStamped()
 
       # set the goal pose frame
-      goal.pose.header.frame_id = "map"
+      goal.pose.header.frame_id = "camera_camera_link"
 
       # time is needed in the header
       goal.pose.header.stamp = self.get_clock().now().to_msg()
@@ -101,7 +101,7 @@ class ObjectDetectListener(Node):
       # set the goal position (quaternion)
       goal.pose.pose.position.x = self.object_x
       goal.pose.pose.position.y = self.object_y
-      goal.pose.pose.position.z = 0 # 2D
+      goal.pose.pose.position.z = 0.0 # 2D
 
       # set angle so that it is facing the object on arrival
       angle = atan2(self.object_y, self.object_x)
@@ -114,11 +114,24 @@ class ObjectDetectListener(Node):
       if not self.nav2_client.wait_for_server(timeout_sec=10.0):
          self.get_logger().info("Nav2 action server not available after 10 seconds")
 
-      # send goal to nav2  
-      self.future = self.nav2_client.send_goal_async(goal)
+      # # send goal to nav2  
+      # self.future = self.nav2_client.send_goal_async(goal)
 
-      # listens for the outcome of the navigation goal
-      self.future.add_done_callback(self.navigation_result_callback)
+      # # listens for the outcome of the navigation goal
+      # self.future.add_done_callback(self.goal_response_callback)
+
+      self.nav2_client.send_goal_async(goal).add_done_callback(self.goal_response_callback)
+
+   def goal_response_callback(self, future):
+      goal_handle = future.result()
+      if not goal_handle.accepted:
+         self.get_logger().info("Goal rejected by Nav2.")
+         self.resume_explore()
+         return
+      
+      self.get_logger().info("Goal accepted by Nav2, waiting for result...")
+
+
 
    def navigation_result_callback(self, future: Future):
       result = future.result()
@@ -132,11 +145,17 @@ class ObjectDetectListener(Node):
          # navigation successful, so pick up object
          self.get_logger().info("Navigation Succeeded!!")
          self.objects_detected = 0
-      else:
+         return
+      elif result.status > 3:
          # navigation unsuccesful - bad!
          self.get_logger().info("ERROR! NAVIGATION FAILED")
+         self.get_logger().info(str(result.status))
          # resume explore and hope it'll not fail next time
          self.resume_explore()
+         return
+      else:
+         self.get_logger().info(str(result.status))
+         return
 
 def main(args=None):
       try:

@@ -98,6 +98,6 @@ def generate_launch_description():
     ld.add_action(cloud_to_map_transform)
     ld.add_action(point_cloud_to_laser_node)
     time.sleep(5)
-    ld.add_action(launch_explore)
+    #ld.add_action(launch_explore)
 
     return ld
