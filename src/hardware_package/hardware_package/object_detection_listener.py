@@ -64,7 +64,7 @@ class ObjectDetectListener(Node):
          self.get_logger().info("Waiting for data on /object_center_distance...")
          return
       else:
-         if self.objects_detected > 30:
+         if self.objects_detected > 1:
 
             # pause explore, set goal pose, nav to goal pose
             self.pause_explore()
