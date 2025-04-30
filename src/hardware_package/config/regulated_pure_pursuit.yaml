@@ -301,7 +301,7 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
-      tolerance: 0.5
+      tolerance: 0.05
       use_astar: false
       allow_unknown: true
 
@@ -373,7 +373,7 @@ collision_monitor:
     cmd_vel_in_topic: "cmd_vel_smoothed"
     cmd_vel_out_topic: "cmd_vel"
     state_topic: "collision_monitor_state"
-    transform_tolerance: 0.2
+    transform_tolerance: 0.1
     source_timeout: 1.0
     base_shift_correction: True
     stop_pub_timeout: 2.0
