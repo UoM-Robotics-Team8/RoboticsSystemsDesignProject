@@ -11,7 +11,7 @@ import time
 color_ranges = {
     "red":    ([0, 185, 50], [15, 255, 255]),
     "yellow": ([22, 155, 50], [35, 255, 255]),
-    "blue":   ([90, 190, 80], [110, 255, 255])
+    "blue": ([77, 36, 129], [179, 255, 255])
 }
 
 class ImageDepthSubscriber(Node):
@@ -149,7 +149,9 @@ class ImageDepthSubscriber(Node):
             }
 
     def publish_target(self):
-        """ 定时发布最新目标 """
+        """ 定时发布最新目标，如果没有检测到目标则发布零坐标 """
+        msg_pos = Float32MultiArray()
+        msg_color = String()
         if self.latest_target and (time.time() - self.last_publish_time) > 0.1:
             # 发布3D坐标
             msg_pos = Float32MultiArray()
@@ -162,6 +164,13 @@ class ImageDepthSubscriber(Node):
             self.pub_color.publish(msg_color)
             
             self.last_publish_time = time.time()
+            self.latest_target = None  # 重置，下一帧需要重新检测
+        else:
+        # 如果未检测到目标，也周期性发布一个0坐标
+            msg_pos.data = [0.0, 0.0, 0.0]
+            msg_color.data = "none"
+            self.pub_position.publish(msg_pos)
+            self.pub_color.publish(msg_color)
 
 def main(args=None):
     rclpy.init(args=args)
