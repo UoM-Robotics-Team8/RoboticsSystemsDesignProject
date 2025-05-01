@@ -9,10 +9,12 @@ import time
 
 # 颜色范围保持不变
 color_ranges = {
-    "red":    ([0, 185, 50], [15, 255, 255]),
+    "red":    ([0, 99, 50], [24, 255, 255]),
     "yellow": ([22, 155, 50], [35, 255, 255]),
+    "green":  ([36, 100, 50], [85, 255, 255]),
     "blue": ([77, 36, 129], [179, 255, 255])
 }
+
 
 class ImageDepthSubscriber(Node):
     def __init__(self, name):
