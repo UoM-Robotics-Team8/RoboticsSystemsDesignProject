@@ -1,11 +1,15 @@
 import rclpy
+import rclpy.duration
 from rclpy.node import Node
 from rclpy.task import Future
 from std_msgs.msg import String, Float32MultiArray, Bool
 from nav2_msgs.action import NavigateToPose
 from rclpy.action import ActionClient
-from geometry_msgs.msg import PoseStamped
-from math import atan2
+from geometry_msgs.msg import PoseStamped, PointStamped
+from math import atan2, sin, cos
+from tf2_ros import Buffer, TransformListener
+from tf2_geometry_msgs import do_transform_point
+from rclpy.time import Time
 
 
 class ObjectDetectListener(Node):
@@ -20,6 +24,9 @@ class ObjectDetectListener(Node):
       self.dist_msg: Float32MultiArray = None
       self.object_x: float = None
       self.object_y: float = None
+
+      self.tf_buffer = Buffer()
+      self.tf_listener = TransformListener(self.tf_buffer, self)
 
       self.object_distance_subscriber = self.create_subscription(
          msg_type=Float32MultiArray,
@@ -76,6 +83,30 @@ class ObjectDetectListener(Node):
          else:
             self.objects_detected += 1
 
+   def get_map_point(self, object_x, object_y):
+      point_in_camera_frame = PointStamped()
+      point_in_camera_frame.header.stamp = self.get_clock().now().to_msg()
+      point_in_camera_frame.header.frame_id = "camera_camera_link"
+      point_in_camera_frame.point.x = object_x
+      point_in_camera_frame.point.y = object_y
+      point_in_camera_frame.point.z = 0
+
+      try:
+         transform = self.tf_buffer.lookup_transform(
+            target_frame="map",
+            source_frame="camera_camera_link",
+            time=Time(),
+            timeout=rclpy.duration.Duration(seconds=1.0)
+         )
+
+         point_in_map = do_transform_point(point_in_camera_frame, transform)
+
+         return point_in_map.point.x, point_in_map.point.y
+      except Exception as e:
+         self.get_logger().info("Tranform failed", e)
+         return None, None
+
+
    def pause_explore(self):
       msg = Bool()
       msg.data = False
@@ -87,25 +118,29 @@ class ObjectDetectListener(Node):
       self.explore_publisher.publish(msg)
    
    def nav_to_object(self):
+
+      x_map, y_map = self.get_map_point(self.object_x, self.object_y)
+
       goal = NavigateToPose.Goal()
       
       # expects this message type
       goal.pose = PoseStamped()
 
       # set the goal pose frame
-      goal.pose.header.frame_id = "camera_camera_link"
+      goal.pose.header.frame_id = "map"
 
       # time is needed in the header
       goal.pose.header.stamp = self.get_clock().now().to_msg()
 
       # set the goal position (quaternion)
-      goal.pose.pose.position.x = self.object_x
-      goal.pose.pose.position.y = self.object_y
+      goal.pose.pose.position.x = x_map
+      goal.pose.pose.position.y = y_map
       goal.pose.pose.position.z = 0.0 # 2D
 
       # set angle so that it is facing the object on arrival
-      angle = atan2(self.object_y, self.object_x)
-      goal.pose.pose.orientation.w = angle
+      angle = atan2(y_map, x_map)
+      goal.pose.pose.orientation.z = sin(angle/2)
+      goal.pose.pose.orientation.w = cos(angle/2)
 
       self.send_goal(goal)
 
@@ -130,8 +165,7 @@ class ObjectDetectListener(Node):
          return
       
       self.get_logger().info("Goal accepted by Nav2, waiting for result...")
-
-
+      goal_handle.get_result_async().add_done_callback(self.navigation_result_callback)
 
    def navigation_result_callback(self, future: Future):
       result = future.result()
