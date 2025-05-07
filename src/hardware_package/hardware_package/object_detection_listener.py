@@ -48,6 +48,13 @@ class ObjectDetectListener(Node):
          qos_profile=1
       )
 
+      self.object_picked_listener = self.create_subscription(
+         msg_type=Bool,
+         topic='/px100/grasping_result',
+         callback=self.object_picked_callback,
+         qos_profile=1
+      )
+
       self.nav2_client = ActionClient(self, NavigateToPose, '/navigate_to_pose')
 
       self.future: Future = None
@@ -84,27 +91,31 @@ class ObjectDetectListener(Node):
             self.objects_detected += 1
 
    def get_map_point(self, object_x, object_y):
-      point_in_camera_frame = PointStamped()
-      point_in_camera_frame.header.stamp = self.get_clock().now().to_msg()
-      point_in_camera_frame.header.frame_id = "camera_camera_link"
-      point_in_camera_frame.point.x = object_x
-      point_in_camera_frame.point.y = object_y
-      point_in_camera_frame.point.z = 0
+      if object_x and object_y is not None:
 
-      try:
-         transform = self.tf_buffer.lookup_transform(
-            target_frame="map",
-            source_frame="camera_camera_link",
-            time=Time(),
-            timeout=rclpy.duration.Duration(seconds=1.0)
-         )
+         point_in_camera_frame = PointStamped()
+         point_in_camera_frame.header.stamp = self.get_clock().now().to_msg()
+         point_in_camera_frame.header.frame_id = "camera_frame"
+         point_in_camera_frame.point.x = object_x
+         point_in_camera_frame.point.y = object_y
+         point_in_camera_frame.point.z = 0.0
 
-         point_in_map = do_transform_point(point_in_camera_frame, transform)
+         try:
+            transform = self.tf_buffer.lookup_transform(
+               target_frame="map",
+               source_frame="camera_frame",
+               time=rclpy.time.Time(),
+               timeout=rclpy.duration.Duration(seconds=1.0)
+            )
 
-         return point_in_map.point.x, point_in_map.point.y
-      except Exception as e:
-         self.get_logger().info("Tranform failed", e)
-         return None, None
+             
+
+            point_in_map = do_transform_point(point_in_camera_frame, transform)
+
+            return point_in_map.point.x, point_in_map.point.y
+         except Exception as e:
+            self.get_logger().info("Tranform failed")
+            return None, None
 
 
    def pause_explore(self):
@@ -121,6 +132,32 @@ class ObjectDetectListener(Node):
 
       x_map, y_map = self.get_map_point(self.object_x, self.object_y)
 
+      if x_map is None or y_map is None:
+         self.get_logger().warn("Could not transform object coordinates to map frame.")
+         self.resume_explore()
+         return
+      
+       # Try to get robot's current position in map frame
+      try:
+         transform = self.tf_buffer.lookup_transform(
+               target_frame="map",
+               source_frame="base_link",  # Change if your base frame is different
+               time=rclpy.time.Time(),  # Latest available
+               timeout=rclpy.duration.Duration(seconds=1.0)
+         )
+         robot_x = transform.transform.translation.x
+         robot_y = transform.transform.translation.y
+      except Exception as e:
+         self.get_logger().warn(f"Failed to get robot position: {str(e)}")
+         self.resume_explore()
+         return
+
+      # Compute heading angle from robot to object
+      dx = x_map - robot_x
+      dy = y_map - robot_y
+      angle = atan2(dy, dx)
+
+      
       goal = NavigateToPose.Goal()
       
       # expects this message type
@@ -133,12 +170,9 @@ class ObjectDetectListener(Node):
       goal.pose.header.stamp = self.get_clock().now().to_msg()
 
       # set the goal position (quaternion)
-      goal.pose.pose.position.x = x_map
-      goal.pose.pose.position.y = y_map
+      goal.pose.pose.position.x = float(x_map)
+      goal.pose.pose.position.y = float(y_map)
       goal.pose.pose.position.z = 0.0 # 2D
-
-      # set angle so that it is facing the object on arrival
-      angle = atan2(y_map, x_map)
       goal.pose.pose.orientation.z = sin(angle/2)
       goal.pose.pose.orientation.w = cos(angle/2)
 
@@ -178,7 +212,13 @@ class ObjectDetectListener(Node):
       if result.status == 3:
          # navigation successful, so pick up object
          self.get_logger().info("Navigation Succeeded!!")
-         self.objects_detected = 0
+
+         start_time = rclpy.time.Time()
+         if self.object_grabbed == True:
+            self.objects_detected = 0
+            self.resume_explore()
+         elif start_time - rclpy.time.Time() == 10:
+            self.resume_explore()
          return
       elif result.status > 3:
          # navigation unsuccesful - bad!
@@ -190,6 +230,10 @@ class ObjectDetectListener(Node):
       else:
          self.get_logger().info(str(result.status))
          return
+      
+   def object_picked_callback(self, msg):
+      self.object_grabbed = msg
+
 
 def main(args=None):
       try:

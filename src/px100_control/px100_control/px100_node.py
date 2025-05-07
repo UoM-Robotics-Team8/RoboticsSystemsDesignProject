@@ -145,6 +145,7 @@ class PX100Node(Node):
             msg.data = False
             self.get_logger().info("Gripper is empty")
 
+        self.grasped_publisher.publish(msg)
 
     def states_callback(self, msg: JointState):
         """Method called when msg is received by node"""
