@@ -104,7 +104,7 @@ controller_server:
       rotate_to_heading_angular_vel: 0.375
       max_angular_accel: 3.2
       simulate_ahead_time: 1.0
-      rotate_to_goal_heading: false
+      rotate_to_goal_heading: true
       rotate_to_heading_once: false
       # Regulated Pure Pursuit
       desired_linear_vel: 0.4
@@ -126,7 +126,7 @@ controller_server:
       regulated_linear_scaling_min_radius: 0.85
       regulated_linear_scaling_min_speed: 0.25
       use_rotate_to_heading: true
-      allow_reversing: false
+      allow_reversing: true
       rotate_to_heading_min_angle: 0.785
       max_angular_accel: 2.5
       max_robot_pose_search_dist: 10.0
@@ -147,11 +147,23 @@ local_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan
+        observation_sources: scan camera
         scan:
-          topic: /scan
+          topic: /scan_filtered
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+        camera:
+          topic: /depth/scan
+          #sensor_frame: camera_camera_link
+          raytrace_min_range: 0.05
+          raytrace_max_range: 5.00
+          obstacle_min_range: 0.05
+          obstacle_max_range: 5.00
+          min_obstacle_height: -0.4
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -218,11 +230,23 @@ global_costmap:
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        observation_sources: scan
+        observation_sources: scan camera
         scan:
-          topic: /scan
+          topic: /scan_filtered
           raytrace_min_range: 0.10
           obstacle_min_range: 0.10
+          min_obstacle_height: -0.4
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+        camera:
+          topic: /depth/scan
+          #sensor_frame: camera_camera_link
+          raytrace_min_range: 0.05
+          raytrace_max_range: 5.00
+          obstacle_min_range: 0.05
+          obstacle_max_range: 5.00
           min_obstacle_height: -0.4
           max_obstacle_height: 2.0
           clearing: True
@@ -277,7 +301,7 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
-      tolerance: 0.5
+      tolerance: 0.05
       use_astar: false
       allow_unknown: true
 
@@ -349,7 +373,7 @@ collision_monitor:
     cmd_vel_in_topic: "cmd_vel_smoothed"
     cmd_vel_out_topic: "cmd_vel"
     state_topic: "collision_monitor_state"
-    transform_tolerance: 0.2
+    transform_tolerance: 0.1
     source_timeout: 1.0
     base_shift_correction: True
     stop_pub_timeout: 2.0
